@@ -1,0 +1,2646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGS - modified by Drowsey</title>
+    <!-- Font & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", system-ui, sans-serif;
+            background: #0f0a0a;
+            min-height: 100vh;
+            color: #f0e0e0;
+            line-height: 1.5;
+            display: flex;
+        }
+
+        /* Disclaimer overlay */
+        .disclaimer-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(90px) brightness(0.3);
+            -webkit-backdrop-filter: blur(90px) brightness(0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.3s ease;
+        }
+
+        .disclaimer-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .disclaimer-card {
+            background: #1a1212;
+            border: 2px solid #b84a3a;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(180, 60, 30, 0.3);
+        }
+
+        .disclaimer-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #d16a5a;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .disclaimer-close:hover {
+            background: #2f1e1e;
+            color: #ff8a7a;
+        }
+
+        .disclaimer-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff7a5a;
+            margin-bottom: 20px;
+            padding-right: 30px;
+        }
+
+        .disclaimer-text {
+            color: #e0c0c0;
+            margin-bottom: 28px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .disclaimer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .disclaimer-link {
+            background: #2f1e1e;
+            color: #ff9f8a;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: 1px solid #b84a3a;
+            font-weight: 600;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .disclaimer-link:hover {
+            background: #b84a3a;
+            color: #ffffff;
+            border-color: #ff7a5a;
+        }
+
+        /* Sidebar with letter filter */
+        .side-nav {
+            width: 240px;
+            background: #140c0c;
+            border-right: 1px solid #3a2420;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 16px;
+            gap: 20px;
+            z-index: 50;
+        }
+
+        .nav-header h2 {
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: -0.2px;
+            color: #ffaa8a;
+            margin-bottom: 4px;
+        }
+
+        .nav-header h2 a {
+            color: #ffaa8a;
+            text-decoration: none;
+        }
+
+        .nav-header h2 a:hover {
+            color: #ff7a5a;
+            text-decoration: underline;
+        }
+
+        /* Letter navigation grid */
+        .letter-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+            max-height: 350px;
+            overflow-y: auto;
+            padding: 8px 0;
+            scrollbar-width: thin;
+            scrollbar-color: #5a3a32 #140c0c;
+            border-top: 1px solid #3a2420;
+            border-bottom: 1px solid #3a2420;
+        }
+
+        .letter-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .letter-nav::-webkit-scrollbar-track {
+            background: #140c0c;
+        }
+
+        .letter-nav::-webkit-scrollbar-thumb {
+            background: #5a3a32;
+            border-radius: 4px;
+        }
+
+        .letter-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #b28a7a;
+            cursor: pointer;
+            transition: 0.15s;
+            text-transform: uppercase;
+            border-radius: 4px;
+        }
+
+        .letter-btn:hover {
+            background: #3a2a24;
+            color: #ffffff;
+        }
+
+        .letter-btn.empty-letter {
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        /* Search box at bottom */
+        .search-box {
+            position: relative;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #b28a7a;
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: #241a18;
+            border: 1px solid #4a322a;
+            border-radius: 6px;
+            padding: 10px 12px 10px 36px;
+            color: #f0e0e0;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: #ff7a5a;
+            background: #2f1e1a;
+        }
+
+        .search-box input::placeholder {
+            color: #8a6a5a;
+            font-weight: 300;
+        }
+
+        .sidebar-footer {
+            font-size: 0.75rem;
+            color: #8a6a5a;
+            text-align: center;
+        }
+
+        .sidebar-footer a {
+            color: #b28a7a;
+            text-decoration: none;
+        }
+
+        .sidebar-footer a:hover {
+            color: #ffaa8a;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 24px 28px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            transition: opacity 0.3s ease;
+        }
+
+        .main-content.hidden {
+            display: none;
+        }
+
+        .main-header {
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .main-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffc0b0;
+            letter-spacing: -0.02em;
+        }
+
+        .main-header h1 a {
+            color: #ffaa8a;
+            text-decoration: none;
+            border-bottom: 2px dotted #b84a3a;
+        }
+
+        .main-header h1 a:hover {
+            color: #ff7a5a;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .browser-toggle-btn {
+            background: #241a18;
+            border: 1px solid #b84a3a;
+            color: #ffaa8a;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .browser-toggle-btn:hover {
+            background: #b84a3a;
+            color: #ffffff;
+        }
+
+        .browser-toggle-btn i {
+            font-size: 1rem;
+        }
+
+        .discord-link {
+            background: #241a18;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #4a322a;
+            font-size: 0.9rem;
+        }
+
+        .discord-link a {
+            color: #ffaa8a;
+            text-decoration: none;
+        }
+
+        .discord-link a:hover {
+            color: #ff7a5a;
+        }
+
+        .letter-section {
+            margin-bottom: 28px;
+            background: #1a1210;
+            border-radius: 8px;
+            padding: 20px 22px;
+            border: 1px solid #3a2420;
+        }
+
+        .letter-section.hidden-section {
+            display: none;
+        }
+
+        .letter-header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #3a2420;
+            color: #ffc0b0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .letter-header span {
+            background: #3a2a24;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            color: #ffaa8a;
+            font-weight: 500;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 6px;
+            will-change: transform;
+        }
+
+        .game-card {
+            background: #120a0a;
+            border: 1px solid #3a2420;
+            border-radius: 6px;
+            padding: 10px 10px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #e0c0c0;
+            font-weight: 400;
+            font-size: 0.85rem;
+            user-select: none;
+            position: relative;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .game-card:hover {
+            background: #2a1a16;
+            border-color: #b84a3a;
+        }
+
+        .game-card i {
+            font-size: 1rem;
+            color: #b28a7a;
+            width: 18px;
+            text-align: center;
+        }
+
+        .game-card .game-name {
+            flex: 1;
+            word-break: break-word;
+            line-height: 1.3;
+        }
+
+        .pin-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #3a2a24;
+            border: 1px solid #b84a3a;
+            color: #ffaa8a;
+            font-size: 0.8rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s, background 0.2s;
+        }
+
+        .game-card:hover .pin-btn {
+            opacity: 1;
+        }
+
+        .pin-btn:hover {
+            background: #b84a3a;
+            color: #ffffff;
+        }
+
+        .top-section {
+            margin-bottom: 28px;
+            background: #1a1210;
+            border-radius: 8px;
+            padding: 20px 22px;
+            border: 1px solid #3a2420;
+        }
+
+        .top-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffc0b0;
+            border-bottom: 1px solid #3a2420;
+            padding-bottom: 8px;
+        }
+
+        .top-header i {
+            color: #b28a7a;
+        }
+
+        .recent-header-controls {
+            margin-left: auto;
+            display: flex;
+            gap: 8px;
+        }
+
+        .clear-recent-btn {
+            background: #3a2a24;
+            border: 1px solid #b84a3a;
+            color: #ffaa8a;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .clear-recent-btn:hover {
+            background: #b84a3a;
+            color: #ffffff;
+        }
+
+        .recent-expand-btn {
+            background: #241a18;
+            border: 1px solid #4a322a;
+            color: #ffaa8a;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 12px;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .recent-expand-btn:hover {
+            background: #3a2a24;
+            color: #ffffff;
+        }
+
+        .pinned-section .game-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 12px 8px;
+        }
+
+        .pinned-section .game-name {
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            width: 100%;
+        }
+
+        .pinned-controls {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .pinned-controls button {
+            background: #241a18;
+            border: 1px solid #4a322a;
+            color: #ffaa8a;
+            border-radius: 4px;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .pinned-controls button:hover {
+            background: #b84a3a;
+            color: #ffffff;
+            border-color: #ff7a5a;
+        }
+
+        .delete-recent-btn {
+            background: #241a18;
+            border: 1px solid #b84a3a;
+            color: #ff7a5a;
+            border-radius: 4px;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            margin-left: auto;
+            opacity: 0;
+        }
+
+        .game-card:hover .delete-recent-btn {
+            opacity: 1;
+        }
+
+        .delete-recent-btn:hover {
+            background: #b84a3a;
+            color: #ffffff;
+        }
+
+        .no-games-message {
+            color: #b28a7a;
+            font-style: italic;
+            padding: 24px;
+            text-align: center;
+            background: #120a0a;
+            border-radius: 6px;
+            border: 1px solid #3a2420;
+            font-size: 0.9rem;
+        }
+
+        .search-results-count {
+            color: #ffaa8a;
+            font-size: 0.9rem;
+            margin-left: 12px;
+            font-weight: normal;
+        }
+
+        /* Browser container - hidden by default */
+        .browser-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 240px;
+            right: 0;
+            bottom: 0;
+            background: #1a1210;
+            z-index: 1000;
+            flex-direction: column;
+            border-left: 1px solid #b84a3a;
+        }
+
+        .browser-container.active {
+            display: flex;
+        }
+
+        /* Import browser styles */
+        .browser {
+            width: 100%;
+            height: 100%;
+            background: #1a1210;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab-bar {
+            background: #140c0c;
+            display: flex;
+            align-items: center;
+            padding: 8px 8px 0 8px;
+            gap: 4px;
+            border-bottom: 1px solid #3a2420;
+            flex-shrink: 0;
+        }
+
+        .tabs {
+            display: flex;
+            flex: 1;
+            gap: 4px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            padding-bottom: 2px;
+        }
+        .tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+        .tabs::-webkit-scrollbar-track {
+            background: #140c0c;
+        }
+        .tabs::-webkit-scrollbar-thumb {
+            background: #5a3a32;
+            border-radius: 4px;
+        }
+
+        .tab {
+            background: #241a18;
+            border-radius: 6px 6px 0 0;
+            padding: 8px 14px 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            min-width: 140px;
+            max-width: 180px;
+            cursor: pointer;
+            transition: background 0.15s;
+            border: 1px solid #3a2420;
+            border-bottom: none;
+            color: #f0e0e0;
+        }
+        .tab:hover {
+            background: #2a1a16;
+        }
+        .tab.active {
+            background: #1a1210;
+            position: relative;
+            border-color: #b84a3a;
+        }
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ff7a5a;
+            border-radius: 2px 2px 0 0;
+        }
+        .favicon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #b28a7a;
+        }
+        .favicon img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            filter: brightness(0.9);
+        }
+        .tab-title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .close-tab {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: #b28a7a;
+            font-size: 14px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .close-tab:hover {
+            background: #3a2a24;
+            border-color: #b84a3a;
+            color: #ff7a5a;
+        }
+
+        .new-tab {
+            background: transparent;
+            border: 1px solid #3a2420;
+            font-size: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffaa8a;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: 0.15s;
+        }
+        .new-tab:hover {
+            background: #3a2a24;
+            border-color: #b84a3a;
+            color: #ff7a5a;
+        }
+
+        .nav-bar {
+            background: #1a1210;
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            gap: 8px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+            position: relative;
+            border-bottom: 1px solid #3a2420;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid #3a2420;
+            width: 38px;
+            height: 38px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffaa8a;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.15s;
+            flex-shrink: 0;
+        }
+        .nav-btn:hover:not(:disabled) {
+            background: #3a2a24;
+            border-color: #b84a3a;
+            color: #ff7a5a;
+        }
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: default;
+            border-color: #2a1a16;
+        }
+
+        .url-bar-container {
+            flex: 1;
+            background: #241a18;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding: 8px 18px;
+            gap: 10px;
+            border: 1px solid #4a322a;
+            transition: 0.15s;
+            min-width: 200px;
+        }
+        .url-bar-container:focus-within {
+            border-color: #ff7a5a;
+            background: #2f1e1a;
+            box-shadow: 0 0 0 2px rgba(255, 122, 90, 0.2);
+        }
+        .url-bar-container i {
+            color: #b28a7a;
+            font-size: 14px;
+        }
+        #url-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            outline: none;
+            color: #f0e0e0;
+        }
+        #url-input::placeholder {
+            color: #8a6a5a;
+        }
+        #bookmark-star {
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+        #bookmark-star.fas {
+            color: #ff7a5a;
+        }
+        #bookmark-star.far:hover {
+            color: #ff7a5a;
+        }
+
+        .bookmarks-bar {
+            background: #140c0c;
+            border-bottom: 1px solid #3a2420;
+            padding: 4px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            overflow-x: auto;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-height: 36px;
+        }
+        .bookmarks-bar.hidden {
+            display: none;
+        }
+        .bookmarks-bar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .bookmarks-bar::-webkit-scrollbar-track {
+            background: #140c0c;
+        }
+        .bookmarks-bar::-webkit-scrollbar-thumb {
+            background: #5a3a32;
+            border-radius: 4px;
+        }
+        .bookmark-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #e0c0c0;
+            border: 1px solid transparent;
+        }
+        .bookmark-item:hover {
+            background: #2a1a16;
+            border-color: #b84a3a;
+        }
+        .bookmark-item img {
+            width: 16px;
+            height: 16px;
+            filter: brightness(0.9);
+        }
+
+        .menu-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 16px;
+            background: #1a1210;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 220px;
+            padding: 8px 0;
+            z-index: 1000;
+            display: none;
+            border: 1px solid #b84a3a;
+        }
+        .menu-dropdown.show {
+            display: block;
+        }
+        .menu-item {
+            padding: 10px 16px;
+            font-size: 14px;
+            color: #f0e0e0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.15s;
+            position: relative;
+        }
+        .menu-item:hover {
+            background: #3a2a24;
+            color: #ff7a5a;
+        }
+        .menu-item i {
+            width: 20px;
+            color: #b28a7a;
+        }
+        .menu-item:hover i {
+            color: #ff7a5a;
+        }
+        .menu-divider {
+            height: 1px;
+            background: #3a2420;
+            margin: 8px 0;
+        }
+
+        .has-submenu {
+            position: relative;
+        }
+        .has-submenu .submenu-arrow {
+            margin-left: auto;
+            font-size: 12px;
+            color: #b28a7a;
+        }
+        .has-submenu:hover .submenu-arrow {
+            color: #ff7a5a;
+        }
+        .submenu {
+            position: absolute;
+            top: 0;
+            right: 100%;
+            background: #1a1210;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 180px;
+            padding: 8px 0;
+            display: none;
+            border: 1px solid #b84a3a;
+            margin-right: 4px;
+        }
+        .has-submenu:hover .submenu {
+            display: block;
+        }
+        .submenu .menu-item {
+            padding: 8px 16px;
+        }
+
+        .content {
+            flex: 1;
+            background: #0f0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #0f0a0a;
+        }
+
+        .tab-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+            background: #0f0a0a;
+        }
+
+        .tab-iframe.active-iframe {
+            display: block;
+        }
+
+        .history-page {
+            color: #f0e0e0;
+            background: #0f0a0a;
+        }
+        .history-page h2 {
+            color: #ff7a5a;
+        }
+        .history-page .day-title {
+            color: #b28a7a;
+            border-bottom-color: #3a2420;
+        }
+        .history-page .history-item:hover {
+            background: #2a1a16;
+        }
+        .history-page .title {
+            color: #f0e0e0;
+        }
+        .history-page .url {
+            color: #b28a7a;
+        }
+
+        /* Browser exit button in 3-dot menu */
+        .exit-browser-item {
+            border-top: 1px solid #3a2420;
+            margin-top: 4px;
+            color: #ff7a5a;
+        }
+        .exit-browser-item i {
+            color: #ff7a5a;
+        }
+        .exit-browser-item:hover {
+            background: #b84a3a;
+            color: #ffffff;
+        }
+        .exit-browser-item:hover i {
+            color: #ffffff;
+        }
+
+        @media (max-width: 800px) {
+            body {
+                flex-direction: column;
+            }
+
+            .side-nav {
+                width: 100%;
+                height: auto;
+                position: relative;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                padding: 16px;
+                gap: 12px;
+                border-right: none;
+                border-bottom: 1px solid #3a2420;
+            }
+
+            .letter-nav {
+                max-height: none;
+                order: 2;
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .search-box {
+                margin-top: 0;
+                order: 3;
+                width: 100%;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+            
+            .browser-container {
+                left: 0;
+                top: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Disclaimer Overlay -->
+    <div class="disclaimer-overlay" id="disclaimerOverlay">
+        <div class="disclaimer-card" id="disclaimerCard">
+            <button class="disclaimer-close" id="closeDisclaimerBtn">&times;</button>
+            <div class="disclaimer-title">⚠️ DISCLAIMER</div>
+            <div class="disclaimer-text">
+                This is NOT the official UGS SINGLEFILE. This is a modified version of the file made by 
+                <a href="https://github.com/Drowsey-Works" target="_blank" style="color: #ff7a5a;">Drowsey</a>. 
+                All games here are from the Ultimate Game Stash community on the Document and Discord.
+            </div>
+            <div class="disclaimer-links">
+                <a href="https://docs.google.com/document/u/1/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/edit" target="_blank" class="disclaimer-link">
+                    <i class="fas fa-file-lines"></i> Google Doc
+                </a>
+                <a href="https://discord.gg/rmVsAqkpkA" target="_blank" class="disclaimer-link">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar with letter filter and search at bottom -->
+    <nav class="side-nav">
+        <div class="nav-header">
+            <h2><i class="fas fa-cube" style="margin-right: 6px;"></i><a href="https://github.com/Drowsey-Works" target="_blank">DROWSEY</a></h2>
+        </div>
+
+        <!-- Letter navigation grid (main filter) -->
+        <div class="letter-nav" id="letterNav">
+            <!-- populated by js -->
+        </div>
+
+        <!-- Search box at bottom -->
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search games..." autocomplete="off">
+        </div>
+
+        <div class="sidebar-footer">
+            <a href="https://discord.gg/rmVsAqkpkA" target="_blank"><i class="fa-brands fa-discord"></i> discord</a> &nbsp;|&nbsp;
+            <a href="https://docs.google.com/document/u/1/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/edit" target="_blank"><i class="fas fa-file-lines"></i> doc</a>
+        </div>
+    </nav>
+
+    <main class="main-content" id="mainContent">
+        <div class="main-header">
+            <h1>
+                <a href="https://github.com/Drowsey-Works" target="_blank">UGS - modified by Drowsey</a>
+                <span class="search-results-count" id="searchResultsCount"></span>
+            </h1>
+            <div class="header-controls">
+                <button class="browser-toggle-btn" id="browserToggleBtn">
+                    <i class="fas fa-globe"></i> Open Browser
+                </button>
+                <div class="discord-link">
+                    <i class="fab fa-discord"></i> <a href="https://discord.gg/rmVsAqkpkA" target="_blank">join discord</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- dynamic sections: pinned, recent, then letter sections go here -->
+        <div id="sections-container"></div>
+
+        <!-- status message -->
+        <div id="statusMessage" style="text-align:center; margin-top:30px; color:#b28a7a;"></div>
+    </main>
+
+    <!-- Browser Container - Hidden by default -->
+    <div class="browser-container" id="browserContainer">
+        <div class="browser">
+            <div class="tab-bar">
+                <div class="tabs" id="tabs-container"></div>
+                <button class="new-tab" id="new-tab-btn" title="New tab"><i class="fas fa-plus"></i></button>
+            </div>
+
+            <div class="nav-bar">
+                <button class="nav-btn" id="back-btn" title="Back" disabled><i class="fas fa-arrow-left"></i></button>
+                <button class="nav-btn" id="forward-btn" title="Forward" disabled><i class="fas fa-arrow-right"></i></button>
+                <button class="nav-btn" id="reload-btn" title="Reload"><i class="fas fa-redo-alt"></i></button>
+
+                <div class="url-bar-container">
+                    <i class="fas fa-lock"></i>
+                    <input type="text" id="url-input" placeholder="Search or enter URL" value="about:blank" spellcheck="false">
+                    <i class="far fa-star" id="bookmark-star"></i>
+                </div>
+
+                <button class="nav-btn" id="menu-btn" title="Menu"><i class="fas fa-ellipsis-v"></i></button>
+                <div class="menu-dropdown" id="menu-dropdown">
+                    <div class="menu-item" id="fullscreen-option"><i class="fas fa-expand"></i> Fullscreen</div>
+                    <div class="menu-item" id="show-bookmarks-bar"><i class="far fa-bookmark"></i> Show bookmarks bar</div>
+                    <div class="menu-divider"></div>
+                    <div class="menu-item" id="history-option"><i class="fas fa-history"></i> History</div>
+                    <div class="menu-item has-submenu" id="bookmarks-menu">
+                        <i class="fas fa-star"></i> Bookmarks
+                        <span class="submenu-arrow"><i class="fas fa-chevron-right"></i></span>
+                        <div class="submenu" id="bookmarks-submenu">
+                            <!-- Bookmarks will be populated here dynamically -->
+                        </div>
+                    </div>
+                    <div class="menu-item has-submenu" id="settings-option">
+                        <i class="fas fa-cog"></i> Settings
+                        <span class="submenu-arrow"><i class="fas fa-chevron-right"></i></span>
+                        <div class="submenu">
+                            <div class="menu-item" data-settings="privacy"><i class="fas fa-shield-alt"></i> Privacy</div>
+                            <div class="menu-item" data-settings="appearance"><i class="fas fa-paint-brush"></i> Appearance</div>
+                            <div class="menu-item" data-settings="search"><i class="fas fa-search"></i> Search engine</div>
+                        </div>
+                    </div>
+                    <div class="menu-divider"></div>
+                    <div class="menu-item exit-browser-item" id="exitBrowserBtn">
+                        <i class="fas fa-arrow-left"></i> Exit Back To Games
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bookmarks bar (initially hidden) -->
+            <div class="bookmarks-bar hidden" id="bookmarks-bar">
+                <!-- Bookmark items will be inserted here -->
+            </div>
+
+            <div class="content" id="content-area">
+                <div class="iframe-container" id="iframe-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            // --- DISCLAIMER ---
+            const disclaimerOverlay = document.getElementById('disclaimerOverlay');
+            const closeDisclaimerBtn = document.getElementById('closeDisclaimerBtn');
+            const disclaimerCard = document.getElementById('disclaimerCard');
+
+            // Close disclaimer function
+            function closeDisclaimer() {
+                disclaimerOverlay.classList.add('hidden');
+            }
+
+            // Close on X button
+            closeDisclaimerBtn.addEventListener('click', closeDisclaimer);
+
+            // Close on click outside the card
+            disclaimerOverlay.addEventListener('click', (e) => {
+                if (!disclaimerCard.contains(e.target)) {
+                    closeDisclaimer();
+                }
+            });
+
+            // Prevent clicks on card from closing
+            disclaimerCard.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            // ---------- BROWSER TOGGLE STATE ----------
+            const browserContainer = document.getElementById('browserContainer');
+            const mainContent = document.getElementById('mainContent');
+            const browserToggleBtn = document.getElementById('browserToggleBtn');
+            const exitBrowserBtn = document.getElementById('exitBrowserBtn');
+            
+            let browserActive = false;
+            let browserInitialized = false;
+
+            // Toggle browser on/off
+            function toggleBrowser(active) {
+                if (active) {
+                    // Switch to browser
+                    mainContent.classList.add('hidden');
+                    browserContainer.classList.add('active');
+                    browserActive = true;
+                    
+                    // Initialize browser only once
+                    if (!browserInitialized) {
+                        initBrowser();
+                        browserInitialized = true;
+                    }
+                } else {
+                    // Switch back to games
+                    mainContent.classList.remove('hidden');
+                    browserContainer.classList.remove('active');
+                    browserActive = false;
+                    
+                    // Clean up browser resources (optional - can keep initialized)
+                    // This helps reduce memory usage when not using browser
+                    cleanupBrowser();
+                }
+            }
+
+            // Open browser button
+            browserToggleBtn.addEventListener('click', () => {
+                toggleBrowser(true);
+            });
+
+            // Exit browser button in 3-dot menu
+            exitBrowserBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleBrowser(false);
+                closeDropdown(); // Close the dropdown menu
+            });
+
+            // ---------- BROWSER STATE MANAGEMENT ----------
+            let tabs = [];
+            let activeTabId = null;
+
+            // Bookmarks
+            const BOOKMARKS_STORAGE_KEY = 'browser_bookmarks';
+            let bookmarks = [];
+            let bookmarksBarVisible = false;
+
+            // DOM elements
+            const tabsContainer = document.getElementById('tabs-container');
+            const newTabBtn = document.getElementById('new-tab-btn');
+            const backBtn = document.getElementById('back-btn');
+            const forwardBtn = document.getElementById('forward-btn');
+            const reloadBtn = document.getElementById('reload-btn');
+            const urlInput = document.getElementById('url-input');
+            const menuBtn = document.getElementById('menu-btn');
+            const menuDropdown = document.getElementById('menu-dropdown');
+            const fullscreenOption = document.getElementById('fullscreen-option');
+            const historyOption = document.getElementById('history-option');
+            const showBookmarksBarItem = document.getElementById('show-bookmarks-bar');
+            const bookmarksSubmenu = document.getElementById('bookmarks-submenu');
+            const bookmarksBar = document.getElementById('bookmarks-bar');
+            const bookmarkStar = document.getElementById('bookmark-star');
+            const iframeContainer = document.getElementById('iframe-container');
+
+            // History in localStorage
+            const HISTORY_STORAGE_KEY = 'browser_history';
+            let historyEntries = [];
+
+            // Load history from localStorage
+            function loadHistory() {
+                const stored = localStorage.getItem(HISTORY_STORAGE_KEY);
+                if (stored) {
+                    try {
+                        historyEntries = JSON.parse(stored);
+                        const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+                        historyEntries = historyEntries.filter(e => e.timestamp >= oneWeekAgo);
+                    } catch (e) {
+                        historyEntries = [];
+                    }
+                } else {
+                    historyEntries = [];
+                }
+            }
+
+            function saveHistory() {
+                localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(historyEntries));
+            }
+
+            function addHistoryEntry(url, title, favicon) {
+                if (!url || url === 'about:blank' || url.startsWith('chrome://')) return;
+                const now = Date.now();
+                historyEntries.push({ url, title, favicon, timestamp: now });
+                const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
+                historyEntries = historyEntries.filter(e => e.timestamp >= oneWeekAgo);
+                saveHistory();
+            }
+
+            // Load bookmarks from localStorage
+            function loadBookmarks() {
+                const stored = localStorage.getItem(BOOKMARKS_STORAGE_KEY);
+                if (stored) {
+                    try {
+                        bookmarks = JSON.parse(stored);
+                    } catch (e) {
+                        bookmarks = [];
+                    }
+                } else {
+                    bookmarks = [];
+                }
+                const barVisible = localStorage.getItem('bookmarks_bar_visible');
+                bookmarksBarVisible = barVisible === 'true';
+            }
+
+            function saveBookmarks() {
+                localStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(bookmarks));
+                updateBookmarksUI();
+            }
+
+            function saveBookmarksBarVisibility() {
+                localStorage.setItem('bookmarks_bar_visible', bookmarksBarVisible);
+                if (bookmarksBarVisible) {
+                    bookmarksBar.classList.remove('hidden');
+                } else {
+                    bookmarksBar.classList.add('hidden');
+                }
+                const icon = showBookmarksBarItem.querySelector('i');
+                if (bookmarksBarVisible) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                }
+            }
+
+            function updateBookmarksUI() {
+                if (!bookmarksBar || !bookmarksSubmenu) return;
+                
+                bookmarksBar.innerHTML = '';
+                bookmarks.forEach(bm => {
+                    const item = document.createElement('div');
+                    item.className = 'bookmark-item';
+                    item.setAttribute('data-url', bm.url);
+                    item.innerHTML = `
+                        <img src="${bm.favicon || 'https://www.google.com/s2/favicons?domain=example.com'}" onerror="this.src='https://www.google.com/s2/favicons?domain=example.com'">
+                        <span>${escapeHtml(bm.title)}</span>
+                    `;
+                    item.addEventListener('click', () => {
+                        if (activeTabId) navigateToUrl(bm.url, activeTabId);
+                    });
+                    bookmarksBar.appendChild(item);
+                });
+
+                bookmarksSubmenu.innerHTML = '';
+                if (bookmarks.length === 0) {
+                    const emptyItem = document.createElement('div');
+                    emptyItem.className = 'menu-item';
+                    emptyItem.textContent = 'No bookmarks';
+                    emptyItem.style.cursor = 'default';
+                    emptyItem.style.color = '#8a6a5a';
+                    bookmarksSubmenu.appendChild(emptyItem);
+                } else {
+                    bookmarks.forEach(bm => {
+                        const item = document.createElement('div');
+                        item.className = 'menu-item';
+                        item.setAttribute('data-url', bm.url);
+                        item.innerHTML = `
+                            <img src="${bm.favicon || 'https://www.google.com/s2/favicons?domain=example.com'}" style="width:16px; height:16px;">
+                            <span>${escapeHtml(bm.title)}</span>
+                        `;
+                        item.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            if (activeTabId) navigateToUrl(bm.url, activeTabId);
+                            closeDropdown();
+                        });
+                        bookmarksSubmenu.appendChild(item);
+                    });
+                }
+            }
+
+            function isBookmarked(url) {
+                return bookmarks.some(b => b.url === url);
+            }
+
+            function toggleBookmark() {
+                const activeTab = tabs.find(t => t.id === activeTabId);
+                if (!activeTab || !activeTab.url || activeTab.url === 'about:blank' || activeTab.url.startsWith('chrome://')) {
+                    alert('Cannot bookmark this page');
+                    return;
+                }
+                const url = activeTab.url;
+                const index = bookmarks.findIndex(b => b.url === url);
+                if (index >= 0) {
+                    bookmarks.splice(index, 1);
+                    bookmarkStar.classList.remove('fas');
+                    bookmarkStar.classList.add('far');
+                } else {
+                    bookmarks.push({
+                        url: url,
+                        title: activeTab.title,
+                        favicon: activeTab.favicon
+                    });
+                    bookmarkStar.classList.remove('far');
+                    bookmarkStar.classList.add('fas');
+                }
+                saveBookmarks();
+            }
+
+            function updateStarIcon() {
+                const activeTab = tabs.find(t => t.id === activeTabId);
+                if (activeTab && isBookmarked(activeTab.url)) {
+                    bookmarkStar.classList.remove('far');
+                    bookmarkStar.classList.add('fas');
+                } else {
+                    bookmarkStar.classList.remove('fas');
+                    bookmarkStar.classList.add('far');
+                }
+            }
+
+            function generateId() {
+                return Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            }
+
+            function domainFromUrl(url) {
+                if (!url || url === 'about:blank' || url.startsWith('chrome://')) return null;
+                try {
+                    const urlObj = new URL(url);
+                    let host = urlObj.hostname;
+                    host = host.replace(/^www\./, '');
+                    if (/^\d+\.\d+\.\d+\.\d+$/.test(host)) return host;
+                    const parts = host.split('.');
+                    if (parts.length >= 2) {
+                        return parts[parts.length - 2];
+                    }
+                    return parts[0];
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function formatTitleFromUrl(url) {
+                if (!url || url === 'about:blank') return 'New Tab';
+                if (url === 'chrome://history') return 'History';
+                const domain = domainFromUrl(url);
+                if (domain) {
+                    return domain.charAt(0).toUpperCase() + domain.slice(1);
+                }
+                try {
+                    const urlObj = new URL(url);
+                    return urlObj.hostname || url;
+                } catch {
+                    return url.length > 30 ? url.substring(0,30)+'…' : url;
+                }
+            }
+
+            function faviconUrlFromUrl(url) {
+                if (!url || url === 'about:blank') return null;
+                if (url === 'chrome://history') return 'https://img.icons8.com/ios/452/history.png';
+                try {
+                    const urlObj = new URL(url);
+                    const domain = urlObj.hostname;
+                    return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+                } catch {
+                    return null;
+                }
+            }
+
+            function createIframeForTab(tab, src = 'about:blank') {
+                const iframe = document.createElement('iframe');
+                iframe.className = 'tab-iframe';
+                iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms allow-modals');
+                iframe.setAttribute('allowfullscreen', 'true');
+                
+                if (src === 'chrome://history') {
+                    iframe.srcdoc = generateHistoryHTML();
+                    iframe.addEventListener('load', function() {
+                        try {
+                            const doc = iframe.contentDocument || iframe.contentWindow.document;
+                            doc.querySelectorAll('.history-item').forEach(el => {
+                                el.addEventListener('click', () => {
+                                    const url = el.dataset.url;
+                                    if (url) navigateToUrl(url, tab.id);
+                                });
+                            });
+                        } catch (e) {}
+                    });
+                } else {
+                    iframe.src = src;
+                }
+
+                if (src !== 'chrome://history') {
+                    iframe.addEventListener('load', function() {
+                        const currentUrl = iframe.src;
+                        tab.url = currentUrl;
+                        tab.title = formatTitleFromUrl(currentUrl);
+                        tab.favicon = faviconUrlFromUrl(currentUrl);
+                        if (currentUrl && !currentUrl.startsWith('about:') && !currentUrl.startsWith('chrome://')) {
+                            addHistoryEntry(currentUrl, tab.title, tab.favicon);
+                        }
+                        if (tab.id === activeTabId) {
+                            refreshUI();
+                        } else {
+                            renderTabs();
+                        }
+                    });
+                }
+
+                tab.iframe = iframe;
+                tab.url = src;
+                tab.title = formatTitleFromUrl(src);
+                tab.favicon = faviconUrlFromUrl(src);
+                
+                iframeContainer.appendChild(iframe);
+                return iframe;
+            }
+
+            function removeIframeForTab(tab) {
+                if (tab.iframe && tab.iframe.parentNode) {
+                    tab.iframe.parentNode.removeChild(tab.iframe);
+                }
+                tab.iframe = null;
+            }
+
+            function updateIframesVisibility() {
+                tabs.forEach(tab => {
+                    if (tab.iframe) {
+                        if (tab.id === activeTabId) {
+                            tab.iframe.classList.add('active-iframe');
+                        } else {
+                            tab.iframe.classList.remove('active-iframe');
+                        }
+                    }
+                });
+            }
+
+            function updateNavButtons() {
+                const currentTab = tabs.find(t => t.id === activeTabId);
+                if (!currentTab) {
+                    backBtn.disabled = true;
+                    forwardBtn.disabled = true;
+                    return;
+                }
+                backBtn.disabled = (currentTab.historyIndex <= 0);
+                forwardBtn.disabled = (currentTab.historyIndex >= currentTab.history.length - 1);
+            }
+
+            function renderTabs() {
+                let html = '';
+                tabs.forEach(tab => {
+                    const isActive = (tab.id === activeTabId);
+                    const showClose = tabs.length > 1;
+                    const closeIcon = showClose ? '<span class="close-tab"><i class="fas fa-times"></i></span>' : '';
+                    const faviconHtml = tab.favicon 
+                        ? `<img src="${tab.favicon}" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\\'fas fa-globe\\'></i>';">` 
+                        : '<i class="fas fa-globe"></i>';
+                    
+                    html += `
+                        <div class="tab ${isActive ? 'active' : ''}" data-id="${tab.id}">
+                            <span class="favicon">${faviconHtml}</span>
+                            <span class="tab-title">${escapeHtml(tab.title || 'Tab')}</span>
+                            ${closeIcon}
+                        </div>
+                    `;
+                });
+                tabsContainer.innerHTML = html;
+                updateNavButtons();
+            }
+
+            function escapeHtml(unsafe) {
+                return unsafe.replace(/[&<>"]/g, function(m) {
+                    if(m === '&') return '&amp;'; if(m === '<') return '&lt;'; if(m === '>') return '&gt;'; if(m === '"') return '&quot;';
+                    return m;
+                });
+            }
+
+            function refreshUI() {
+                renderTabs();
+                updateIframesVisibility();
+                updateUrlInputFromActiveTab();
+                updateNavButtons();
+                updateStarIcon();
+            }
+
+            function updateUrlInputFromActiveTab() {
+                const active = tabs.find(t => t.id === activeTabId);
+                if (active) {
+                    urlInput.value = active.url || 'about:blank';
+                } else {
+                    urlInput.value = '';
+                }
+            }
+
+            function generateHistoryHTML() {
+                const entries = [...historyEntries].reverse();
+                const groups = {};
+                entries.forEach(entry => {
+                    const date = new Date(entry.timestamp);
+                    const dateStr = date.toISOString().split('T')[0];
+                    const todayStr = new Date().toISOString().split('T')[0];
+                    const yesterdayStr = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                    
+                    let displayDate;
+                    if (dateStr === todayStr) displayDate = 'Today';
+                    else if (dateStr === yesterdayStr) displayDate = 'Yesterday';
+                    else displayDate = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+                    if (!groups[displayDate]) groups[displayDate] = [];
+                    groups[displayDate].push(entry);
+                });
+
+                let html = `
+                    <style>
+                        body { font-family: 'Inter', system-ui, sans-serif; background: #0f0a0a; padding: 20px; margin: 0; }
+                        h2 { color: #ff7a5a; font-weight: 500; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+                        .day-group { margin-bottom: 30px; }
+                        .day-title { font-size: 14px; font-weight: 500; color: #b28a7a; margin-bottom: 10px; border-bottom: 1px solid #3a2420; padding-bottom: 4px; }
+                        .history-item { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; }
+                        .history-item:hover { background: #2a1a16; border-color: #b84a3a; }
+                        .history-item img { width: 16px; height: 16px; filter: brightness(0.9); }
+                        .history-item .info { flex: 1; }
+                        .history-item .title { font-size: 14px; color: #f0e0e0; }
+                        .history-item .url { font-size: 12px; color: #b28a7a; }
+                    </style>
+                    <div style="max-width: 800px; margin: 0 auto;" class="history-page">
+                    <h2><i class="fas fa-history" style="color: #ff7a5a;"></i> History</h2>
+                `;
+
+                if (entries.length === 0) {
+                    html += '<p style="color: #b28a7a;">No history yet. Visit some websites!</p>';
+                } else {
+                    for (const [day, items] of Object.entries(groups)) {
+                        html += `<div class="day-group"><div class="day-title">${day}</div>`;
+                        items.forEach(item => {
+                            const favicon = item.favicon || 'https://www.google.com/s2/favicons?domain=example.com';
+                            html += `
+                                <div class="history-item" data-url="${item.url}">
+                                    <img src="${favicon}" onerror="this.src='https://www.google.com/s2/favicons?domain=example.com'">
+                                    <div class="info">
+                                        <div class="title">${escapeHtml(item.title)}</div>
+                                        <div class="url">${escapeHtml(item.url)}</div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        html += '</div>';
+                    }
+                }
+                html += '</div>';
+                return html;
+            }
+
+            function switchTab(tabId) {
+                if (!tabs.some(t => t.id === tabId)) return;
+                activeTabId = tabId;
+                refreshUI();
+            }
+
+            function addTab() {
+                const newId = generateId();
+                const newTab = {
+                    id: newId,
+                    url: 'about:blank',
+                    title: 'New Tab',
+                    favicon: null,
+                    history: ['about:blank'],
+                    historyIndex: 0
+                };
+                createIframeForTab(newTab, 'about:blank');
+                tabs.push(newTab);
+                activeTabId = newId;
+                refreshUI();
+            }
+
+            function closeTab(tabId) {
+                if (tabs.length <= 1) return;
+                const index = tabs.findIndex(t => t.id === tabId);
+                if (index === -1) return;
+                const tabToRemove = tabs[index];
+                const wasActive = (tabToRemove.id === activeTabId);
+                removeIframeForTab(tabToRemove);
+                tabs.splice(index, 1);
+                if (wasActive) {
+                    if (index < tabs.length) {
+                        activeTabId = tabs[index].id;
+                    } else {
+                        activeTabId = tabs[tabs.length - 1].id;
+                    }
+                }
+                refreshUI();
+            }
+
+            function navigateToUrl(rawUrl, tabId) {
+                const tab = tabs.find(t => t.id === tabId);
+                if (!tab || !tab.iframe) return;
+
+                let url = rawUrl.trim();
+                if (url === '') url = 'about:blank';
+                if (!url.match(/^[a-zA-Z]+:\/\//) && url !== 'about:blank' && !url.startsWith('chrome://')) {
+                    url = 'https://' + url;
+                }
+
+                if (url === 'chrome://history') {
+                    tab.url = url;
+                    tab.title = 'History';
+                    tab.favicon = 'https://img.icons8.com/ios/452/history.png';
+                    tab.iframe.srcdoc = generateHistoryHTML();
+                    tab.iframe.onload = () => {
+                        try {
+                            const doc = tab.iframe.contentDocument || tab.iframe.contentWindow.document;
+                            doc.querySelectorAll('.history-item').forEach(el => {
+                                el.addEventListener('click', () => {
+                                    const historyUrl = el.dataset.url;
+                                    if (historyUrl) navigateToUrl(historyUrl, tab.id);
+                                });
+                            });
+                        } catch (e) {}
+                    };
+                    tab.history = tab.history.slice(0, tab.historyIndex + 1);
+                    tab.history.push(url);
+                    tab.historyIndex = tab.history.length - 1;
+                    if (tabId === activeTabId) refreshUI();
+                    else renderTabs();
+                    return;
+                }
+
+                tab.history = tab.history.slice(0, tab.historyIndex + 1);
+                tab.history.push(url);
+                tab.historyIndex = tab.history.length - 1;
+                tab.url = url;
+                tab.iframe.src = url;
+                tab.title = formatTitleFromUrl(url);
+                tab.favicon = faviconUrlFromUrl(url);
+
+                if (tabId === activeTabId) {
+                    refreshUI();
+                } else {
+                    renderTabs();
+                }
+            }
+
+            function toggleDropdown(show) {
+                if (show === undefined) {
+                    menuDropdown.classList.toggle('show');
+                } else if (show) {
+                    menuDropdown.classList.add('show');
+                } else {
+                    menuDropdown.classList.remove('show');
+                }
+            }
+
+            function closeDropdown() {
+                menuDropdown.classList.remove('show');
+            }
+
+            // Clean up browser resources when not in use
+            function cleanupBrowser() {
+                // Optional: You can nullify iframe sources to free memory
+                // But keep the tabs structure for when user returns
+                if (tabs.length > 0) {
+                    tabs.forEach(tab => {
+                        if (tab.iframe && tab.url !== 'about:blank') {
+                            // Store current URL but unload iframe to save memory
+                            // Commented out because you might want to keep pages loaded
+                            // tab.iframe.src = 'about:blank';
+                        }
+                    });
+                }
+            }
+
+            // Initialize browser event listeners
+            function initBrowser() {
+                // Load data
+                loadHistory();
+                loadBookmarks();
+                saveBookmarksBarVisibility();
+                updateBookmarksUI();
+
+                // Menu button
+                menuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleDropdown();
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
+                        closeDropdown();
+                    }
+                });
+
+                fullscreenOption.addEventListener('click', () => {
+                    const activeTab = tabs.find(t => t.id === activeTabId);
+                    if (activeTab && activeTab.iframe) {
+                        if (activeTab.iframe.requestFullscreen) {
+                            activeTab.iframe.requestFullscreen();
+                        } else if (activeTab.iframe.webkitRequestFullscreen) {
+                            activeTab.iframe.webkitRequestFullscreen();
+                        } else if (activeTab.iframe.msRequestFullscreen) {
+                            activeTab.iframe.msRequestFullscreen();
+                        } else {
+                            alert('Fullscreen not supported on this iframe');
+                        }
+                    }
+                    closeDropdown();
+                });
+
+                showBookmarksBarItem.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    bookmarksBarVisible = !bookmarksBarVisible;
+                    saveBookmarksBarVisibility();
+                    closeDropdown();
+                });
+
+                historyOption.addEventListener('click', () => {
+                    const newId = generateId();
+                    const newTab = {
+                        id: newId,
+                        url: 'chrome://history',
+                        title: 'History',
+                        favicon: 'https://img.icons8.com/ios/452/history.png',
+                        history: ['chrome://history'],
+                        historyIndex: 0
+                    };
+                    createIframeForTab(newTab, 'chrome://history');
+                    tabs.push(newTab);
+                    activeTabId = newId;
+                    refreshUI();
+                    closeDropdown();
+                });
+
+                document.querySelectorAll('.submenu .menu-item[data-settings]').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const setting = item.getAttribute('data-settings');
+                        alert(`Settings: ${setting} clicked (placeholder)`);
+                        closeDropdown();
+                    });
+                });
+
+                bookmarkStar.addEventListener('click', toggleBookmark);
+
+                tabsContainer.addEventListener('click', (e) => {
+                    const tabEl = e.target.closest('.tab');
+                    if (!tabEl) return;
+                    const tabId = tabEl.dataset.id;
+                    if (e.target.closest('.close-tab')) {
+                        e.stopPropagation();
+                        closeTab(tabId);
+                    } else {
+                        switchTab(tabId);
+                    }
+                });
+
+                newTabBtn.addEventListener('click', addTab);
+
+                backBtn.addEventListener('click', () => {
+                    const tab = tabs.find(t => t.id === activeTabId);
+                    if (!tab || tab.historyIndex <= 0) return;
+                    tab.historyIndex--;
+                    const prevUrl = tab.history[tab.historyIndex];
+                    navigateToUrl(prevUrl, tab.id);
+                });
+
+                forwardBtn.addEventListener('click', () => {
+                    const tab = tabs.find(t => t.id === activeTabId);
+                    if (!tab || tab.historyIndex >= tab.history.length - 1) return;
+                    tab.historyIndex++;
+                    const nextUrl = tab.history[tab.historyIndex];
+                    navigateToUrl(nextUrl, tab.id);
+                });
+
+                reloadBtn.addEventListener('click', () => {
+                    const tab = tabs.find(t => t.id === activeTabId);
+                    if (tab && tab.iframe) {
+                        if (tab.url === 'chrome://history') {
+                            tab.iframe.srcdoc = generateHistoryHTML();
+                        } else {
+                            tab.iframe.src = tab.iframe.src;
+                        }
+                    }
+                });
+
+                urlInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const newUrl = urlInput.value;
+                        if (activeTabId) {
+                            navigateToUrl(newUrl, activeTabId);
+                        }
+                    }
+                });
+
+                // Create default tab
+                const defaultTab = {
+                    id: generateId(),
+                    url: 'about:blank',
+                    title: 'New Tab',
+                    favicon: null,
+                    history: ['about:blank'],
+                    historyIndex: 0
+                };
+                createIframeForTab(defaultTab, 'about:blank');
+                tabs = [defaultTab];
+                activeTabId = defaultTab.id;
+                refreshUI();
+            }
+
+            // ---------- ORIGINAL GAME CODE (keep everything below) ----------
+            // ---------- PINNED & RECENT (localStorage) ----------
+            let pinnedGames = [];        // array of {file, label}
+            let recentGames = [];         // array of {file, label} (most recent first)
+            let recentExpanded = false;   // whether to show all recent (>10)
+
+            // Store original click handlers
+            const gameClickHandlers = {};
+
+            // Cache for game data
+            let gameCache = {
+                allGames: [],              // All games as {file, label, letter, card}
+                letterMap: new Map(),       // Map letter -> array of games
+                searchIndex: new Map(),      // Map search term -> results (for future optimization)
+                pinnedCards: [],             // DOM elements for pinned games
+                recentCards: []               // DOM elements for recent games
+            };
+
+            // Load from localStorage
+            function loadPinned() {
+                try {
+                    const stored = localStorage.getItem('pinnedGames');
+                    pinnedGames = stored ? JSON.parse(stored) : [];
+                } catch { pinnedGames = []; }
+            }
+            function loadRecent() {
+                try {
+                    const stored = localStorage.getItem('recentGames');
+                    recentGames = stored ? JSON.parse(stored) : [];
+                } catch { recentGames = []; }
+            }
+            function savePinned() {
+                localStorage.setItem('pinnedGames', JSON.stringify(pinnedGames));
+            }
+            function saveRecent() {
+                localStorage.setItem('recentGames', JSON.stringify(recentGames));
+            }
+
+            loadPinned();
+            loadRecent();
+
+            // References to container and sections
+            const sectionsContainer = document.getElementById('sections-container');
+            const statusEl = document.getElementById('statusMessage');
+            const letterNav = document.getElementById('letterNav');
+            const searchInput = document.getElementById('searchInput');
+            const searchResultsCount = document.getElementById('searchResultsCount');
+
+            let allSections = []; // will hold { element, letter, cards }
+            let pinnedSectionEl = null;
+            let recentSectionEl = null;
+
+            // Helper to get game identifier from card
+            function getGameFromCard(card) {
+                const file = card.dataset.file;
+                const label = card.dataset.label;
+                return { file, label };
+            }
+
+            // Clear all recent games
+            function clearAllRecent() {
+                recentGames = [];
+                saveRecent();
+                renderRecentSection();
+            }
+
+            // Remove single recent game
+            function removeFromRecent(file) {
+                recentGames = recentGames.filter(g => g.file !== file);
+                saveRecent();
+                renderRecentSection();
+            }
+
+            // ---------- Render pinned section (controls below name) ----------
+            function renderPinnedSection() {
+                if (!pinnedSectionEl) {
+                    pinnedSectionEl = document.createElement('div');
+                    pinnedSectionEl.id = 'pinned-section';
+                    pinnedSectionEl.className = 'top-section pinned-section';
+                    sectionsContainer.prepend(pinnedSectionEl);
+                }
+
+                const header = document.createElement('div');
+                header.className = 'top-header';
+                header.innerHTML = `<i class="fas fa-thumbtack"></i> Pinned Games <span style="font-size:0.8rem; margin-left:auto; color:#b28a7a;">${pinnedGames.length}</span>`;
+
+                const grid = document.createElement('div');
+                grid.className = 'games-grid';
+
+                if (pinnedGames.length === 0) {
+                    grid.innerHTML = '<div class="no-games-message">📌 No pinned games yet — hover over any game and click the pin.</div>';
+                } else {
+                    pinnedGames.forEach((game, index) => {
+                        const card = createPinnedCard(game, index);
+                        grid.appendChild(card);
+                    });
+                }
+
+                pinnedSectionEl.innerHTML = '';
+                pinnedSectionEl.appendChild(header);
+                pinnedSectionEl.appendChild(grid);
+            }
+
+            function createPinnedCard(game, index) {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.dataset.file = game.file;
+                card.dataset.label = game.label;
+                card.setAttribute('tabindex', '0');
+                card.innerHTML = `
+                    <span class="game-name">${game.label}</span>
+                    <div class="pinned-controls">
+                        <button class="move-left" title="move left"><i class="fas fa-chevron-left"></i></button>
+                        <button class="move-right" title="move right"><i class="fas fa-chevron-right"></i></button>
+                        <button class="unpin-btn" title="unpin"><i class="fas fa-trash-can"></i></button>
+                    </div>
+                `;
+                
+                // move left
+                card.querySelector('.move-left').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const newIndex = (index - 1 + pinnedGames.length) % pinnedGames.length;
+                    [pinnedGames[index], pinnedGames[newIndex]] = [pinnedGames[newIndex], pinnedGames[index]];
+                    savePinned();
+                    renderPinnedSection();
+                    updatePinIconsOnAllCards();
+                });
+                
+                // move right
+                card.querySelector('.move-right').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const newIndex = (index + 1) % pinnedGames.length;
+                    [pinnedGames[index], pinnedGames[newIndex]] = [pinnedGames[newIndex], pinnedGames[index]];
+                    savePinned();
+                    renderPinnedSection();
+                    updatePinIconsOnAllCards();
+                });
+                
+                // unpin
+                card.querySelector('.unpin-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    pinnedGames = pinnedGames.filter((_, i) => i !== index);
+                    savePinned();
+                    renderPinnedSection();
+                    updatePinIconsOnAllCards();
+                });
+                
+                // Click on the card itself launches the game
+                card.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    handleGameClick(game.file, game.label);
+                });
+                
+                return card;
+            }
+
+            // ---------- Render recent section with delete buttons and clear all ----------
+            function renderRecentSection() {
+                if (!recentSectionEl) {
+                    recentSectionEl = document.createElement('div');
+                    recentSectionEl.id = 'recent-section';
+                    recentSectionEl.className = 'top-section';
+                    if (pinnedSectionEl) {
+                        pinnedSectionEl.after(recentSectionEl);
+                    } else {
+                        sectionsContainer.prepend(recentSectionEl);
+                    }
+                }
+
+                const header = document.createElement('div');
+                header.className = 'top-header';
+                header.innerHTML = `
+                    <i class="fas fa-clock"></i> Recent Games 
+                    <span style="font-size:0.8rem; color:#b28a7a;">${recentGames.length}</span>
+                    <div class="recent-header-controls">
+                        ${recentGames.length > 0 ? '<button class="clear-recent-btn" title="Clear all recent games"><i class="fas fa-trash"></i> Clear Recent</button>' : ''}
+                    </div>
+                `;
+
+                // Add clear all functionality
+                const clearBtn = header.querySelector('.clear-recent-btn');
+                if (clearBtn) {
+                    clearBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        clearAllRecent();
+                    });
+                }
+
+                const grid = document.createElement('div');
+                grid.className = 'games-grid';
+
+                const displayGames = recentExpanded ? recentGames : recentGames.slice(0, 10);
+
+                if (displayGames.length === 0) {
+                    grid.innerHTML = '<div class="no-games-message">🕒 No recent games — click any game to start playing.</div>';
+                } else {
+                    displayGames.forEach(game => {
+                        const card = createRecentCard(game);
+                        grid.appendChild(card);
+                    });
+                }
+
+                const footer = document.createElement('div');
+                if (recentGames.length > 10) {
+                    const expandBtn = document.createElement('span');
+                    expandBtn.className = 'recent-expand-btn';
+                    expandBtn.innerHTML = recentExpanded ? '🔼 Show less' : '🔽 Show all';
+                    expandBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        recentExpanded = !recentExpanded;
+                        renderRecentSection();
+                    });
+                    footer.appendChild(expandBtn);
+                }
+
+                recentSectionEl.innerHTML = '';
+                recentSectionEl.appendChild(header);
+                recentSectionEl.appendChild(grid);
+                if (footer.children.length) recentSectionEl.appendChild(footer);
+            }
+
+            function createRecentCard(game) {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.dataset.file = game.file;
+                card.dataset.label = game.label;
+                card.setAttribute('tabindex', '0');
+                card.innerHTML = `
+                    <i class="fas fa-gamepad"></i>
+                    <span class="game-name">${game.label}</span>
+                    <button class="delete-recent-btn" title="remove from recent"><i class="fas fa-times"></i></button>
+                `;
+
+                // Delete button for this recent game
+                const deleteBtn = card.querySelector('.delete-recent-btn');
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    removeFromRecent(game.file);
+                });
+
+                card.addEventListener('click', (e) => {
+                    // Don't trigger if clicking delete button
+                    if (e.target.closest('.delete-recent-btn')) return;
+                    handleGameClick(game.file, game.label);
+                });
+                
+                return card;
+            }
+
+            // ---------- Update all pin icons in letter sections (thumbtack / trash-can) ----------
+            function updatePinIconsOnAllCards() {
+                document.querySelectorAll('.game-card:not(.pinned-section .game-card):not(.recent-section .game-card)').forEach(card => {
+                    const pinBtn = card.querySelector('.pin-btn');
+                    if (!pinBtn) return;
+                    const { file } = getGameFromCard(card);
+                    const isPinned = pinnedGames.some(p => p.file === file);
+                    pinBtn.innerHTML = isPinned ? '<i class="fas fa-trash-can"></i>' : '<i class="fas fa-thumbtack"></i>';
+                });
+            }
+
+            // ---------- Add to recent ----------
+            function addToRecent(file, label) {
+                recentGames = recentGames.filter(g => g.file !== file);
+                recentGames.unshift({ file, label });
+                if (recentGames.length > 50) recentGames.pop();
+                saveRecent();
+                renderRecentSection();
+            }
+
+            // ---------- Handle game click (play) ----------
+            function handleGameClick(file, label) {
+                addToRecent(file, label);
+                // Call original handler if exists
+                if (gameClickHandlers[file]) {
+                    gameClickHandlers[file]();
+                }
+            }
+
+            // ---------- Toggle pin ----------
+            function togglePin(file, label) {
+                const index = pinnedGames.findIndex(p => p.file === file);
+                if (index === -1) {
+                    pinnedGames.unshift({ file, label });
+                } else {
+                    pinnedGames.splice(index, 1);
+                }
+                savePinned();
+                renderPinnedSection();
+                updatePinIconsOnAllCards();
+            }
+
+            // ---------- Create game card for letter sections ----------
+            function createGameCard(file, displayName, originalClick) {
+                if (originalClick) {
+                    gameClickHandlers[file] = originalClick;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.setAttribute('tabindex', '0');
+                card.dataset.file = file;
+                card.dataset.label = displayName;
+                card.innerHTML = `
+                    <i class="fas fa-gamepad"></i>
+                    <span class="game-name">${displayName}</span>
+                    <button class="pin-btn" title="pin/unpin"><i class="fas fa-thumbtack"></i></button>
+                `;
+
+                // We'll use event delegation instead of attaching individual listeners
+                return card;
+            }
+
+            // ---------- Transform original buttons into cards (enhanced with pin) ----------
+            function transformToCards() {
+                const sections = document.querySelectorAll('.letter-section');
+                allSections = [];
+
+                // Use a fragment to batch DOM updates
+                const fragment = document.createDocumentFragment();
+
+                sections.forEach(section => {
+                    const header = section.querySelector('.letter-header');
+                    if (!header) return;
+                    const letter = header.innerText.trim().charAt(0);
+                    const container = section.querySelector('.buttons-container');
+                    if (!container) return;
+
+                    // Create grid container
+                    const grid = document.createElement('div');
+                    grid.className = 'games-grid';
+
+                    // Process each input button
+                    const buttons = Array.from(container.querySelectorAll('input[type="button"]'));
+                    buttons.forEach(btn => {
+                        const file = btn.value;
+                        const displayName = window.gameLabels?.[file] || file;
+                        const originalClick = btn.onclick;
+
+                        const card = createGameCard(file, displayName, originalClick);
+                        grid.appendChild(card);
+                    });
+
+                    // Replace old container with new grid
+                    container.parentNode.replaceChild(grid, container);
+
+                    // Store section data
+                    allSections.push({
+                        element: section,
+                        letter: letter,
+                        cards: Array.from(grid.children)
+                    });
+
+                    fragment.appendChild(section);
+                });
+
+                // Clear container and append all sections at once
+                sectionsContainer.innerHTML = '';
+                sectionsContainer.appendChild(fragment);
+
+                // Set up event delegation on sections container
+                setupEventDelegation();
+
+                // Update pin icons after cards are created
+                updatePinIconsOnAllCards();
+
+                // Render pinned and recent sections (they will be placed at top)
+                renderPinnedSection();
+                renderRecentSection();
+
+                // Ensure order: pinned, recent, then letters
+                if (pinnedSectionEl && recentSectionEl) {
+                    sectionsContainer.prepend(pinnedSectionEl);
+                    pinnedSectionEl.after(recentSectionEl);
+                } else if (pinnedSectionEl) {
+                    sectionsContainer.prepend(pinnedSectionEl);
+                } else if (recentSectionEl) {
+                    sectionsContainer.prepend(recentSectionEl);
+                }
+
+                updateLetterNav();
+            }
+
+            // ---------- Event delegation for clicks on game cards and pin buttons ----------
+            function setupEventDelegation() {
+                sectionsContainer.addEventListener('click', (e) => {
+                    // Find the closest game card
+                    const card = e.target.closest('.game-card');
+                    if (!card) return;
+
+                    // Check if the click was on a pin button (or its child)
+                    const pinBtn = e.target.closest('.pin-btn');
+                    if (pinBtn) {
+                        e.stopPropagation(); // Prevent card click
+                        const { file, label } = getGameFromCard(card);
+                        togglePin(file, label);
+                        return;
+                    }
+
+                    // Check if click is on pinned controls (should not trigger game)
+                    if (e.target.closest('.pinned-controls')) return;
+                    
+                    // Check if click is on delete recent button
+                    if (e.target.closest('.delete-recent-btn')) return;
+
+                    // Otherwise, it's a game click
+                    const { file, label } = getGameFromCard(card);
+                    handleGameClick(file, label);
+                });
+            }
+
+            // --- update letter navigation with counts ---
+            function updateLetterNav() {
+                if (!allSections.length) return;
+                const counts = {};
+                allSections.forEach(s => {
+                    counts[s.letter] = s.cards.length;
+                });
+
+                const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+                letterNav.innerHTML = '';
+                alphabet.forEach(letter => {
+                    const count = counts[letter] || 0;
+                    const btn = document.createElement('div');
+                    btn.className = `letter-btn ${count === 0 ? 'empty-letter' : ''}`;
+                    btn.textContent = letter;
+                    if (count > 0) {
+                        btn.setAttribute('data-letter', letter);
+                        btn.addEventListener('click', () => {
+                            const targetSection = allSections.find(s => s.letter === letter)?.element;
+                            if (targetSection) {
+                                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        });
+                    }
+                    letterNav.appendChild(btn);
+                });
+            }
+
+            // --- OPTIMIZED FILTER FUNCTION ---
+            function filterGames(searchTerm) {
+                if (!allSections.length) return;
+
+                const term = searchTerm.trim().toLowerCase();
+                
+                // Use requestAnimationFrame to batch visual updates
+                requestAnimationFrame(() => {
+                    let totalVisible = 0;
+                    
+                    // Use class toggling instead of direct style manipulation where possible
+                    const hideClass = 'hidden-section';
+
+                    // 1. Filter letter sections - batch updates by toggling section visibility
+                    allSections.forEach(section => {
+                        const cards = section.cards;
+                        let visibleCount = 0;
+                        
+                        // Check if section has any matches
+                        for (let i = 0; i < cards.length; i++) {
+                            const card = cards[i];
+                            const gameName = card.querySelector('.game-name')?.innerText.toLowerCase() || '';
+                            const matches = term === '' || gameName.includes(term);
+                            
+                            // Use classList for better performance than style.display
+                            if (matches) {
+                                card.classList.remove('hidden-card');
+                                visibleCount++;
+                            } else {
+                                card.classList.add('hidden-card');
+                            }
+                        }
+                        
+                        // Hide entire section if no visible cards
+                        if (visibleCount === 0 && term !== '') {
+                            section.element.classList.add(hideClass);
+                        } else {
+                            section.element.classList.remove(hideClass);
+                            totalVisible += visibleCount;
+                        }
+                    });
+
+                    // 2. Filter Pinned section
+                    if (pinnedSectionEl) {
+                        const pinnedCards = Array.from(pinnedSectionEl.querySelectorAll('.game-card'));
+                        let visibleCount = 0;
+                        
+                        pinnedCards.forEach(card => {
+                            const gameName = card.querySelector('.game-name')?.innerText.toLowerCase() || '';
+                            const matches = term === '' || gameName.includes(term);
+                            
+                            if (matches) {
+                                card.classList.remove('hidden-card');
+                                visibleCount++;
+                            } else {
+                                card.classList.add('hidden-card');
+                            }
+                        });
+                        
+                        if (visibleCount === 0 && term !== '') {
+                            pinnedSectionEl.classList.add(hideClass);
+                        } else {
+                            pinnedSectionEl.classList.remove(hideClass);
+                            totalVisible += visibleCount;
+                        }
+                    }
+
+                    // 3. Filter Recent section
+                    if (recentSectionEl) {
+                        const recentCards = Array.from(recentSectionEl.querySelectorAll('.game-card'));
+                        let visibleCount = 0;
+                        
+                        recentCards.forEach(card => {
+                            const gameName = card.querySelector('.game-name')?.innerText.toLowerCase() || '';
+                            const matches = term === '' || gameName.includes(term);
+                            
+                            if (matches) {
+                                card.classList.remove('hidden-card');
+                                visibleCount++;
+                            } else {
+                                card.classList.add('hidden-card');
+                            }
+                        });
+                        
+                        if (visibleCount === 0 && term !== '') {
+                            recentSectionEl.classList.add(hideClass);
+                        } else {
+                            recentSectionEl.classList.remove(hideClass);
+                            totalVisible += visibleCount;
+                        }
+                    }
+
+                    // Update search results count
+                    if (term === '') {
+                        searchResultsCount.textContent = '';
+                    } else {
+                        searchResultsCount.textContent = `(${totalVisible} results)`;
+                    }
+
+                    // 4. Show/hide "no matches" message
+                    let msg = document.getElementById('no-match-message');
+                    if (totalVisible === 0 && term !== '') {
+                        if (!msg) {
+                            msg = document.createElement('div');
+                            msg.id = 'no-match-message';
+                            msg.className = 'no-games-message';
+                            sectionsContainer.appendChild(msg);
+                        }
+                        msg.textContent = `✨ no games matching "${term}"`;
+                    } else {
+                        if (msg) msg.remove();
+                    }
+                });
+            }
+
+            // Add CSS for hidden cards
+            const style = document.createElement('style');
+            style.textContent = `
+                .game-card.hidden-card {
+                    display: none !important;
+                }
+            `;
+            document.head.appendChild(style);
+
+            // --- load games.js and enhance ---
+            function loadAndEnhance() {
+                statusEl.textContent = '📦 loading game stash...';
+
+                const oldScript = document.querySelector('script[src*="ugs-singlefile"]');
+                if (oldScript) oldScript.remove();
+
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/gh/bubbls/ugs-singlefile@main/games.js';
+                script.async = true;
+
+                script.onload = () => {
+                    statusEl.textContent = '';
+
+                    // ----- ADD NEWER GAMES (empty placeholder) -----
+                    const newerFiles = [];
+
+                    if (newerFiles.length > 0) {
+                        const getFirstChar = (file) => {
+                            const lower = file.toLowerCase();
+                            if (lower.startsWith('cl')) {
+                                const after = lower.substring(2);
+                                return after.length > 0 ? after[0].toUpperCase() : '';
+                            }
+                            return '';
+                        };
+                        const createGameButton = (file) => {
+                            const btn = document.createElement('input');
+                            btn.type = 'button';
+                            btn.value = file;
+                            btn.style.width = '100%';
+                            btn.style.height = '100%';
+                            btn.onclick = () => {
+                                const normalizeFileName = (name) => {
+                                    if (name.includes('.') && name.lastIndexOf('.') > 0) return name;
+                                    return name + '.html';
+                                };
+                                const normalized = normalizeFileName(file);
+                                const encoded = encodeURIComponent(normalized);
+                                fetch(`https://cdn.jsdelivr.net/gh/bubbls/ugs-singlefile/UGS-Files/${encoded}?t=${Date.now()}`)
+                                    .then(response => response.text())
+                                    .then(text => {
+                                        const newWin = window.open("about:blank", "_blank");
+                                        if (newWin) {
+                                            newWin.document.open();
+                                            newWin.document.write(text);
+                                            newWin.document.close();
+                                        }
+                                    });
+                            };
+                            return btn;
+                        };
+
+                        newerFiles.forEach(file => {
+                            const firstChar = getFirstChar(file);
+                            if (!firstChar) return;
+                            let section = document.getElementById(`section-${firstChar}`);
+                            if (!section) {
+                                section = document.createElement('div');
+                                section.className = 'letter-section';
+                                section.id = `section-${firstChar}`;
+                                const header = document.createElement('div');
+                                header.className = 'letter-header';
+                                header.textContent = firstChar;
+                                section.appendChild(header);
+                                const container = document.createElement('div');
+                                container.className = 'buttons-container';
+                                section.appendChild(container);
+                                const containerParent = document.getElementById('sections-container');
+                                const existingSections = Array.from(containerParent.children);
+                                let inserted = false;
+                                for (let i = 0; i < existingSections.length; i++) {
+                                    const id = existingSections[i].id;
+                                    if (id && id.startsWith('section-')) {
+                                        const existingChar = id.replace('section-', '');
+                                        if (firstChar < existingChar) {
+                                            containerParent.insertBefore(section, existingSections[i]);
+                                            inserted = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (!inserted) containerParent.appendChild(section);
+                            }
+                            const buttonsContainer = section.querySelector('.buttons-container');
+                            if (buttonsContainer) {
+                                buttonsContainer.appendChild(createGameButton(file));
+                            }
+                        });
+                    }
+
+                    setTimeout(() => {
+                        transformToCards();
+                    }, 80);
+                };
+
+                script.onerror = () => {
+                    statusEl.textContent = '⚠️ failed to load games. check connection.';
+                    sectionsContainer.innerHTML = '<div class="no-games-message">could not load data. refresh?</div>';
+                };
+
+                document.body.appendChild(script);
+            }
+
+            // --- init games ---
+            loadAndEnhance();
+
+            // --- OPTIMIZED SEARCH LISTENER ---
+            let searchTimeout;
+            let lastSearchTerm = '';
+            
+            searchInput.addEventListener('input', () => {
+                const currentTerm = searchInput.value;
+                
+                // Clear previous timeout
+                if (searchTimeout) {
+                    clearTimeout(searchTimeout);
+                }
+                
+                // Only trigger search if term actually changed
+                if (currentTerm === lastSearchTerm) return;
+                
+                // Debounce search for better performance
+                searchTimeout = setTimeout(() => {
+                    lastSearchTerm = currentTerm;
+                    filterGames(currentTerm);
+                }, 100);
+            });
+
+        })();
+    </script>
+    <script
+        src="https://cdn.jsdelivr.net/gh/Drowsey-Works/Singlefile-modding@refs/heads/main/game-label-handler.js"></script>
+
+</body>
+
+</html>
