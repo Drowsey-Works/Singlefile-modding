@@ -1,0 +1,2587 @@
+UGS - modified by Drowsey
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+:root {
+--bg-primary: #0f0a0a;
+--bg-secondary: #140c0c;
+--bg-tertiary: #1a1210;
+--bg-card: #120a0a;
+--bg-hover: #2a1a16;
+--border-color: #3a2420;
+--border-hover: #b84a3a;
+--text-primary: #f0e0e0;
+--text-secondary: #b28a7a;
+--accent-primary: #ff7a5a;
+--accent-secondary: #ffaa8a;
+--accent-tertiary: #b84a3a;
+--shadow-color: rgba(180, 60, 30, 0.3);
+/* Transition for smooth theme changes */
+transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
+}
+/* Individual theme styles */
+body.theme-red {
+--bg-primary: #1a0a0a;
+--bg-secondary: #2a1210;
+--bg-tertiary: #3a1a18;
+--bg-card: #2a1210;
+--bg-hover: #4a2a24;
+--border-color: #b84a3a;
+--border-hover: #ff7a5a;
+--text-primary: #ffe0e0;
+--text-secondary: #ffb0a0;
+--accent-primary: #ff4a3a;
+--accent-secondary: #ff8a7a;
+--accent-tertiary: #b83a2a;
+--shadow-color: rgba(255, 60, 30, 0.3);
+}
+body.theme-orange {
+--bg-primary: #1a0f0a;
+--bg-secondary: #2a1a12;
+--bg-tertiary: #3a251a;
+--bg-card: #2a1a12;
+--bg-hover: #4a3524;
+--border-color: #b86a3a;
+--border-hover: #ff9a5a;
+--text-primary: #fff0e0;
+--text-secondary: #ffc0a0;
+--accent-primary: #ff8a3a;
+--accent-secondary: #ffb07a;
+--accent-tertiary: #b85a2a;
+--shadow-color: rgba(255, 120, 30, 0.3);
+}
+body.theme-yellow {
+--bg-primary: #1a150a;
+--bg-secondary: #2a2412;
+--bg-tertiary: #3a331a;
+--bg-card: #2a2412;
+--bg-hover: #4a4324;
+--border-color: #b8a03a;
+--border-hover: #ffd95a;
+--text-primary: #ffffe0;
+--text-secondary: #ffe0a0;
+--accent-primary: #ffd93a;
+--accent-secondary: #ffe67a;
+--accent-tertiary: #b89f2a;
+--shadow-color: rgba(240, 200, 30, 0.3);
+}
+body.theme-green {
+--bg-primary: #0a150a;
+--bg-secondary: #122512;
+--bg-tertiary: #1a351a;
+--bg-card: #122512;
+--bg-hover: #244524;
+--border-color: #3a9f3a;
+--border-hover: #4caf50;
+--text-primary: #e0ffe0;
+--text-secondary: #a0ffa0;
+--accent-primary: #4caf50;
+--accent-secondary: #7acf7a;
+--accent-tertiary: #2a8f2a;
+--shadow-color: rgba(60, 180, 30, 0.3);
+}
+body.theme-blue {
+--bg-primary: #0a0a1a;
+--bg-secondary: #12122a;
+--bg-tertiary: #1a1a3a;
+--bg-card: #12122a;
+--bg-hover: #24244a;
+--border-color: #3a4ab8;
+--border-hover: #3b7aff;
+--text-primary: #e0e0ff;
+--text-secondary: #a0b0ff;
+--accent-primary: #3b7aff;
+--accent-secondary: #7a9fff;
+--accent-tertiary: #2a3ab8;
+--shadow-color: rgba(30, 60, 255, 0.3);
+}
+body.theme-indigo {
+--bg-primary: #120a1a;
+--bg-secondary: #1a122a;
+--bg-tertiary: #221a3a;
+--bg-card: #1a122a;
+--bg-hover: #2a244a;
+--border-color: #5a3ab8;
+--border-hover: #6f3bff;
+--text-primary: #f0e0ff;
+--text-secondary: #c0a0ff;
+--accent-primary: #6f3bff;
+--accent-secondary: #9f7aff;
+--accent-tertiary: #4f2ab8;
+--shadow-color: rgba(90, 30, 255, 0.3);
+}
+body.theme-violet {
+--bg-primary: #1a0a1a;
+--bg-secondary: #2a122a;
+--bg-tertiary: #3a1a3a;
+--bg-card: #2a122a;
+--bg-hover: #4a244a;
+--border-color: #b03ab8;
+--border-hover: #b13bff;
+--text-primary: #ffe0ff;
+--text-secondary: #ffa0ff;
+--accent-primary: #b13bff;
+--accent-secondary: #cf7aff;
+--accent-tertiary: #8f2ab8;
+--shadow-color: rgba(150, 30, 255, 0.3);
+}
+body.theme-pink {
+--bg-primary: #1a0a15;
+--bg-secondary: #2a1222;
+--bg-tertiary: #3a1a2f;
+--bg-card: #2a1222;
+--bg-hover: #4a243a;
+--border-color: #b83a8f;
+--border-hover: #ff3b9f;
+--text-primary: #ffe0f5;
+--text-secondary: #ffa0d0;
+--accent-primary: #ff3b9f;
+--accent-secondary: #ff7ac0;
+--accent-tertiary: #b82a7a;
+--shadow-color: rgba(255, 30, 150, 0.3);
+}
+body.theme-lime {
+--bg-primary: #0f1a0a;
+--bg-secondary: #1a2a12;
+--bg-tertiary: #253a1a;
+--bg-card: #1a2a12;
+--bg-hover: #354a24;
+--border-color: #8fb83a;
+--border-hover: #b3ff3b;
+--text-primary: #f0ffe0;
+--text-secondary: #d0ffa0;
+--accent-primary: #b3ff3b;
+--accent-secondary: #d0ff7a;
+--accent-tertiary: #8fb82a;
+--shadow-color: rgba(150, 255, 30, 0.3);
+}
+body.theme-white {
+--bg-primary: #1a1a1a;
+--bg-secondary: #2a2a2a;
+--bg-tertiary: #3a3a3a;
+--bg-card: #2a2a2a;
+--bg-hover: #4a4a4a;
+--border-color: #b0b0b0;
+--border-hover: #ffffff;
+--text-primary: #ffffff;
+--text-secondary: #e0e0e0;
+--accent-primary: #ffffff;
+--accent-secondary: #f0f0f0;
+--accent-tertiary: #c0c0c0;
+--shadow-color: rgba(255, 255, 255, 0.2);
+}
+body.theme-black {
+--bg-primary: #000000;
+--bg-secondary: #080808;
+--bg-tertiary: #101010;
+--bg-card: #080808;
+--bg-hover: #202020;
+--border-color: #404040;
+--border-hover: #808080;
+--text-primary: #e0e0e0;
+--text-secondary: #a0a0a0;
+--accent-primary: #808080;
+--accent-secondary: #a0a0a0;
+--accent-tertiary: #404040;
+--shadow-color: rgba(255, 255, 255, 0.1);
+}
+body {
+font-family: "Inter", system-ui, sans-serif;
+background: var(--bg-primary);
+min-height: 100vh;
+color: var(--text-primary);
+line-height: 1.5;
+display: flex;
+transition: background-color 0.5s ease;
+}
+/* Apply transitions to all themed elements */
+.side-nav,
+.disclaimer-card,
+.letter-btn,
+.search-box input,
+.game-card,
+.pin-btn,
+.top-section,
+.discord-link,
+.browser-toggle-btn,
+.theme-picker-btn,
+.theme-dropdown,
+.browser-container,
+.tab-bar,
+.tab,
+.nav-bar,
+.nav-btn,
+.url-bar-container,
+.bookmarks-bar,
+.bookmark-item,
+.menu-dropdown,
+.menu-item,
+.submenu,
+.browser .content {
+transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
+}
+/* Sidebar visibility states */
+.side-nav {
+width: 240px;
+background: var(--bg-secondary);
+border-right: 1px solid var(--border-color);
+height: 100vh;
+position: sticky;
+top: 0;
+display: flex;
+flex-direction: column;
+padding: 24px 16px;
+gap: 20px;
+z-index: 50;
+transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.5s ease;
+}
+.side-nav.hidden {
+transform: translateX(-100%);
+opacity: 0;
+pointer-events: none;
+}
+/* Main content adjusts when sidebar is hidden */
+.main-content {
+flex: 1;
+padding: 24px 28px;
+max-width: 1400px;
+margin: 0 auto;
+width: 100%;
+transition: opacity 0.3s ease;
+}
+.main-content.full-width {
+max-width: none;
+margin-left: 0;
+}
+.main-content.hidden {
+display: none;
+}
+/* Disclaimer overlay */
+.disclaimer-overlay {
+position: fixed;
+inset: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.7);
+backdrop-filter: blur(90px) brightness(0.3);
+-webkit-backdrop-filter: blur(90px) brightness(0.3);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 10000;
+transition: opacity 0.3s ease;
+}
+.disclaimer-overlay.hidden {
+opacity: 0;
+pointer-events: none;
+}
+.disclaimer-card {
+background: var(--bg-secondary);
+border: 2px solid var(--accent-tertiary);
+border-radius: 16px;
+padding: 32px;
+max-width: 500px;
+width: 90%;
+position: relative;
+box-shadow: 0 20px 40px var(--shadow-color);
+}
+.disclaimer-close {
+position: absolute;
+top: 16px;
+right: 20px;
+background: none;
+border: none;
+color: var(--accent-secondary);
+font-size: 28px;
+cursor: pointer;
+padding: 0;
+width: 32px;
+height: 32px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 4px;
+transition: 0.2s;
+}
+.disclaimer-close:hover {
+background: var(--bg-hover);
+color: var(--accent-primary);
+}
+.disclaimer-title {
+font-size: 1.8rem;
+font-weight: 700;
+color: var(--accent-primary);
+margin-bottom: 20px;
+padding-right: 30px;
+}
+.disclaimer-text {
+color: var(--text-secondary);
+margin-bottom: 28px;
+line-height: 1.6;
+font-size: 1.1rem;
+}
+.disclaimer-text a {
+color: var(--accent-primary);
+}
+.disclaimer-links {
+display: flex;
+gap: 20px;
+flex-wrap: wrap;
+}
+.disclaimer-link {
+background: var(--bg-hover);
+color: var(--accent-secondary);
+text-decoration: none;
+padding: 12px 24px;
+border-radius: 8px;
+border: 1px solid var(--accent-tertiary);
+font-weight: 600;
+transition: 0.2s;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+}
+.disclaimer-link:hover {
+background: var(--accent-tertiary);
+color: var(--text-primary);
+border-color: var(--accent-primary);
+}
+.nav-header h2 {
+font-weight: 600;
+font-size: 1.1rem;
+letter-spacing: -0.2px;
+color: var(--accent-secondary);
+margin-bottom: 4px;
+}
+.nav-header h2 a {
+color: var(--accent-secondary);
+text-decoration: none;
+}
+.nav-header h2 a:hover {
+color: var(--accent-primary);
+text-decoration: underline;
+}
+/* Letter navigation grid */
+.letter-nav {
+display: flex;
+flex-wrap: wrap;
+gap: 4px;
+justify-content: center;
+max-height: 350px;
+overflow-y: auto;
+padding: 8px 0;
+scrollbar-width: thin;
+scrollbar-color: var(--border-hover) var(--bg-secondary);
+border-top: 1px solid var(--border-color);
+border-bottom: 1px solid var(--border-color);
+}
+.letter-nav::-webkit-scrollbar {
+width: 4px;
+}
+.letter-nav::-webkit-scrollbar-track {
+background: var(--bg-secondary);
+}
+.letter-nav::-webkit-scrollbar-thumb {
+background: var(--accent-tertiary);
+border-radius: 4px;
+}
+.letter-btn {
+width: 32px;
+height: 32px;
+display: flex;
+align-items: center;
+justify-content: center;
+background: transparent;
+border: none;
+font-weight: 500;
+font-size: 0.85rem;
+color: var(--text-secondary);
+cursor: pointer;
+transition: 0.15s;
+text-transform: uppercase;
+border-radius: 4px;
+}
+.letter-btn:hover {
+background: var(--bg-hover);
+color: var(--text-primary);
+}
+.letter-btn.empty-letter {
+opacity: 0.2;
+pointer-events: none;
+}
+/* Search box at bottom */
+.search-box {
+position: relative;
+width: 100%;
+margin-top: auto;
+}
+.search-box i {
+position: absolute;
+left: 12px;
+top: 50%;
+transform: translateY(-50%);
+color: var(--text-secondary);
+font-size: 0.85rem;
+pointer-events: none;
+}
+.search-box input {
+width: 100%;
+background: var(--bg-card);
+border: 1px solid var(--border-color);
+border-radius: 6px;
+padding: 10px 12px 10px 36px;
+color: var(--text-primary);
+font-size: 0.9rem;
+outline: none;
+transition: 0.2s;
+}
+.search-box input:focus {
+border-color: var(--accent-primary);
+background: var(--bg-hover);
+}
+.search-box input::placeholder {
+color: var(--text-secondary);
+font-weight: 300;
+}
+.sidebar-footer {
+font-size: 0.75rem;
+color: var(--text-secondary);
+text-align: center;
+}
+.sidebar-footer a {
+color: var(--accent-secondary);
+text-decoration: none;
+}
+.sidebar-footer a:hover {
+color: var(--accent-primary);
+}
+.main-header {
+margin-bottom: 28px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+flex-wrap: wrap;
+gap: 12px;
+}
+.main-header h1 {
+font-size: 1.8rem;
+font-weight: 700;
+color: var(--text-primary);
+letter-spacing: -0.02em;
+}
+.main-header h1 a {
+color: var(--accent-secondary);
+text-decoration: none;
+border-bottom: 2px dotted var(--accent-tertiary);
+}
+.main-header h1 a:hover {
+color: var(--accent-primary);
+}
+.header-controls {
+display: flex;
+gap: 12px;
+align-items: center;
+}
+/* Theme picker button and dropdown */
+.theme-picker {
+position: relative;
+}
+.theme-picker-btn {
+background: var(--bg-tertiary);
+border: 1px solid var(--border-color);
+color: var(--accent-secondary);
+padding: 8px 16px;
+border-radius: 6px;
+font-size: 0.9rem;
+cursor: pointer;
+transition: 0.2s;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.theme-picker-btn:hover {
+background: var(--bg-hover);
+border-color: var(--accent-tertiary);
+color: var(--accent-primary);
+}
+.theme-picker-btn i {
+font-size: 1rem;
+}
+.theme-dropdown {
+position: absolute;
+top: 45px;
+right: 0;
+background: var(--bg-tertiary);
+border: 1px solid var(--border-color);
+border-radius: 8px;
+box-shadow: 0 4px 20px var(--shadow-color);
+width: 200px;
+padding: 8px 0;
+z-index: 1000;
+display: none;
+}
+.theme-dropdown.show {
+display: block;
+}
+.theme-option {
+padding: 10px 16px;
+font-size: 14px;
+color: var(--text-primary);
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 12px;
+transition: 0.2s;
+}
+.theme-option:hover {
+background: var(--bg-hover);
+color: var(--accent-primary);
+}
+.theme-option i {
+width: 20px;
+color: var(--accent-secondary);
+}
+.theme-option:hover i {
+color: var(--accent-primary);
+}
+.theme-option.active {
+background: var(--accent-tertiary);
+color: var(--text-primary);
+}
+.theme-option.active i {
+color: var(--text-primary);
+}
+.browser-toggle-btn {
+background: var(--bg-tertiary);
+border: 1px solid var(--border-color);
+color: var(--accent-secondary);
+padding: 8px 16px;
+border-radius: 6px;
+font-size: 0.9rem;
+cursor: pointer;
+transition: 0.2s;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.browser-toggle-btn:hover {
+background: var(--bg-hover);
+border-color: var(--accent-tertiary);
+color: var(--accent-primary);
+}
+.browser-toggle-btn i {
+font-size: 1rem;
+}
+.discord-link {
+background: var(--bg-tertiary);
+padding: 8px 16px;
+border-radius: 6px;
+border: 1px solid var(--border-color);
+font-size: 0.9rem;
+}
+.discord-link a {
+color: var(--accent-secondary);
+text-decoration: none;
+}
+.discord-link a:hover {
+color: var(--accent-primary);
+}
+.letter-section {
+margin-bottom: 28px;
+background: var(--bg-tertiary);
+border-radius: 8px;
+padding: 20px 22px;
+border: 1px solid var(--border-color);
+}
+.letter-section.hidden-section {
+display: none;
+}
+.letter-header {
+font-size: 1.5rem;
+font-weight: 600;
+margin-bottom: 16px;
+padding-bottom: 8px;
+border-bottom: 1px solid var(--border-color);
+color: var(--text-primary);
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.letter-header span {
+background: var(--bg-hover);
+border-radius: 4px;
+font-size: 0.8rem;
+padding: 2px 8px;
+color: var(--accent-secondary);
+font-weight: 500;
+}
+.games-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+gap: 6px;
+will-change: transform;
+}
+.game-card {
+background: var(--bg-card);
+border: 1px solid var(--border-color);
+border-radius: 6px;
+padding: 10px 10px;
+transition: all 0.2s ease;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 8px;
+color: var(--text-primary);
+font-weight: 400;
+font-size: 0.85rem;
+user-select: none;
+position: relative;
+transform: translateZ(0);
+backface-visibility: hidden;
+}
+.game-card:hover {
+background: var(--bg-hover);
+border-color: var(--border-hover);
+}
+.game-card i {
+font-size: 1rem;
+color: var(--text-secondary);
+width: 18px;
+text-align: center;
+}
+.game-card .game-name {
+flex: 1;
+word-break: break-word;
+line-height: 1.3;
+}
+.pin-btn {
+position: absolute;
+right: 6px;
+top: 50%;
+transform: translateY(-50%);
+background: var(--bg-hover);
+border: 1px solid var(--accent-tertiary);
+color: var(--accent-secondary);
+font-size: 0.8rem;
+width: 24px;
+height: 24px;
+border-radius: 4px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+opacity: 0;
+transition: opacity 0.2s, background 0.2s;
+}
+.game-card:hover .pin-btn {
+opacity: 1;
+}
+.pin-btn:hover {
+background: var(--accent-tertiary);
+color: var(--text-primary);
+}
+.top-section {
+margin-bottom: 28px;
+background: var(--bg-tertiary);
+border-radius: 8px;
+padding: 20px 22px;
+border: 1px solid var(--border-color);
+}
+.top-header {
+display: flex;
+align-items: center;
+gap: 12px;
+margin-bottom: 16px;
+font-size: 1.3rem;
+font-weight: 600;
+color: var(--text-primary);
+border-bottom: 1px solid var(--border-color);
+padding-bottom: 8px;
+}
+.top-header i {
+color: var(--text-secondary);
+}
+.recent-header-controls {
+margin-left: auto;
+display: flex;
+gap: 8px;
+}
+.clear-recent-btn {
+background: var(--bg-hover);
+border: 1px solid var(--accent-tertiary);
+color: var(--accent-secondary);
+padding: 4px 12px;
+border-radius: 4px;
+font-size: 0.8rem;
+cursor: pointer;
+transition: 0.2s;
+}
+.clear-recent-btn:hover {
+background: var(--accent-tertiary);
+color: var(--text-primary);
+}
+.recent-expand-btn {
+background: var(--bg-card);
+border: 1px solid var(--border-color);
+color: var(--accent-secondary);
+padding: 4px 12px;
+border-radius: 4px;
+font-size: 0.8rem;
+cursor: pointer;
+margin-top: 12px;
+display: inline-block;
+transition: 0.2s;
+}
+.recent-expand-btn:hover {
+background: var(--bg-hover);
+color: var(--accent-primary);
+}
+.pinned-section .game-card {
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+padding: 12px 8px;
+}
+.pinned-section .game-name {
+margin-bottom: 10px;
+font-weight: 500;
+font-size: 0.8rem;
+width: 100%;
+}
+.pinned-controls {
+display: flex;
+gap: 6px;
+justify-content: center;
+width: 100%;
+}
+.pinned-controls button {
+background: var(--bg-card);
+border: 1px solid var(--border-color);
+color: var(--accent-secondary);
+border-radius: 4px;
+width: 28px;
+height: 28px;
+cursor: pointer;
+font-size: 0.75rem;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: 0.2s;
+}
+.pinned-controls button:hover {
+background: var(--accent-tertiary);
+color: var(--text-primary);
+border-color: var(--accent-primary);
+}
+.delete-recent-btn {
+background: var(--bg-card);
+border: 1px solid var(--accent-tertiary);
+color: var(--accent-primary);
+border-radius: 4px;
+width: 28px;
+height: 28px;
+cursor: pointer;
+font-size: 0.75rem;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: 0.2s;
+margin-left: auto;
+opacity: 0;
+}
+.game-card:hover .delete-recent-btn {
+opacity: 1;
+}
+.delete-recent-btn:hover {
+background: var(--accent-tertiary);
+color: var(--text-primary);
+}
+.no-games-message {
+color: var(--text-secondary);
+font-style: italic;
+padding: 24px;
+text-align: center;
+background: var(--bg-card);
+border-radius: 6px;
+border: 1px solid var(--border-color);
+font-size: 0.9rem;
+}
+.search-results-count {
+color: var(--accent-secondary);
+font-size: 0.9rem;
+margin-left: 12px;
+font-weight: normal;
+}
+/* Browser container - full screen when active */
+.browser-container {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: var(--bg-primary);
+z-index: 1000;
+flex-direction: column;
+border: none;
+}
+.browser-container.active {
+display: flex;
+}
+.browser {
+width: 100%;
+height: 100%;
+background: var(--bg-primary);
+display: flex;
+flex-direction: column;
+}
+.tab-bar {
+background: var(--bg-secondary);
+display: flex;
+align-items: center;
+padding: 8px 8px 0 8px;
+gap: 4px;
+border-bottom: 1px solid var(--border-color);
+flex-shrink: 0;
+}
+.tabs {
+display: flex;
+flex: 1;
+gap: 4px;
+overflow-x: auto;
+scrollbar-width: thin;
+padding-bottom: 2px;
+}
+.tabs::-webkit-scrollbar {
+height: 4px;
+}
+.tabs::-webkit-scrollbar-track {
+background: var(--bg-secondary);
+}
+.tabs::-webkit-scrollbar-thumb {
+background: var(--accent-tertiary);
+border-radius: 4px;
+}
+.tab {
+background: var(--bg-tertiary);
+border-radius: 6px 6px 0 0;
+padding: 8px 14px 8px 12px;
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 13px;
+min-width: 140px;
+max-width: 180px;
+cursor: pointer;
+transition: background 0.15s;
+border: 1px solid var(--border-color);
+border-bottom: none;
+color: var(--text-primary);
+}
+.tab:hover {
+background: var(--bg-hover);
+}
+.tab.active {
+background: var(--bg-primary);
+position: relative;
+border-color: var(--border-hover);
+}
+.tab.active::after {
+content: '';
+position: absolute;
+bottom: -1px;
+left: 0;
+right: 0;
+height: 2px;
+background: var(--accent-primary);
+border-radius: 2px 2px 0 0;
+}
+.favicon {
+width: 16px;
+height: 16px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+color: var(--text-secondary);
+}
+.favicon img {
+width: 16px;
+height: 16px;
+object-fit: contain;
+filter: brightness(0.9);
+}
+.tab-title {
+flex: 1;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.close-tab {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 20px;
+height: 20px;
+border-radius: 4px;
+background: transparent;
+border: 1px solid transparent;
+color: var(--text-secondary);
+font-size: 14px;
+cursor: pointer;
+flex-shrink: 0;
+}
+.close-tab:hover {
+background: var(--bg-hover);
+border-color: var(--border-hover);
+color: var(--accent-primary);
+}
+.new-tab {
+background: transparent;
+border: 1px solid var(--border-color);
+font-size: 22px;
+width: 40px;
+height: 40px;
+border-radius: 6px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--accent-secondary);
+cursor: pointer;
+flex-shrink: 0;
+transition: 0.15s;
+}
+.new-tab:hover {
+background: var(--bg-hover);
+border-color: var(--border-hover);
+color: var(--accent-primary);
+}
+.nav-bar {
+background: var(--bg-primary);
+display: flex;
+align-items: center;
+padding: 8px 16px;
+gap: 8px;
+flex-wrap: wrap;
+flex-shrink: 0;
+position: relative;
+border-bottom: 1px solid var(--border-color);
+}
+.nav-btn {
+background: transparent;
+border: 1px solid var(--border-color);
+width: 38px;
+height: 38px;
+border-radius: 6px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--accent-secondary);
+font-size: 16px;
+cursor: pointer;
+transition: 0.15s;
+flex-shrink: 0;
+}
+.nav-btn:hover:not(:disabled) {
+background: var(--bg-hover);
+border-color: var(--border-hover);
+color: var(--accent-primary);
+}
+.nav-btn:disabled {
+opacity: 0.3;
+cursor: default;
+border-color: var(--border-color);
+}
+.url-bar-container {
+flex: 1;
+background: var(--bg-tertiary);
+border-radius: 6px;
+display: flex;
+align-items: center;
+padding: 8px 18px;
+gap: 10px;
+border: 1px solid var(--border-color);
+transition: 0.15s;
+min-width: 200px;
+}
+.url-bar-container:focus-within {
+border-color: var(--accent-primary);
+background: var(--bg-hover);
+box-shadow: 0 0 0 2px var(--shadow-color);
+}
+.url-bar-container i {
+color: var(--text-secondary);
+font-size: 14px;
+}
+#url-input {
+flex: 1;
+border: none;
+background: transparent;
+font-size: 15px;
+outline: none;
+color: var(--text-primary);
+}
+#url-input::placeholder {
+color: var(--text-secondary);
+}
+#bookmark-star {
+cursor: pointer;
+transition: color 0.15s;
+}
+#bookmark-star.fas {
+color: var(--accent-primary);
+}
+#bookmark-star.far:hover {
+color: var(--accent-primary);
+}
+.bookmarks-bar {
+background: var(--bg-secondary);
+border-bottom: 1px solid var(--border-color);
+padding: 4px 16px;
+display: flex;
+align-items: center;
+gap: 12px;
+overflow-x: auto;
+white-space: nowrap;
+flex-shrink: 0;
+min-height: 36px;
+}
+.bookmarks-bar.hidden {
+display: none;
+}
+.bookmarks-bar::-webkit-scrollbar {
+height: 4px;
+}
+.bookmarks-bar::-webkit-scrollbar-track {
+background: var(--bg-secondary);
+}
+.bookmarks-bar::-webkit-scrollbar-thumb {
+background: var(--accent-tertiary);
+border-radius: 4px;
+}
+.bookmark-item {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+padding: 4px 8px;
+border-radius: 4px;
+cursor: pointer;
+font-size: 12px;
+color: var(--text-primary);
+border: 1px solid transparent;
+}
+.bookmark-item:hover {
+background: var(--bg-hover);
+border-color: var(--border-hover);
+}
+.bookmark-item img {
+width: 16px;
+height: 16px;
+filter: brightness(0.9);
+}
+.menu-dropdown {
+position: absolute;
+top: 50px;
+right: 16px;
+background: var(--bg-tertiary);
+border-radius: 8px;
+box-shadow: 0 4px 20px var(--shadow-color);
+width: 220px;
+padding: 8px 0;
+z-index: 1000;
+display: none;
+border: 1px solid var(--border-hover);
+}
+.menu-dropdown.show {
+display: block;
+}
+.menu-item {
+padding: 10px 16px;
+font-size: 14px;
+color: var(--text-primary);
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 12px;
+transition: 0.15s;
+position: relative;
+}
+.menu-item:hover {
+background: var(--bg-hover);
+color: var(--accent-primary);
+}
+.menu-item i {
+width: 20px;
+color: var(--text-secondary);
+}
+.menu-item:hover i {
+color: var(--accent-primary);
+}
+.menu-divider {
+height: 1px;
+background: var(--border-color);
+margin: 8px 0;
+}
+.has-submenu {
+position: relative;
+}
+.has-submenu .submenu-arrow {
+margin-left: auto;
+font-size: 12px;
+color: var(--text-secondary);
+}
+.has-submenu:hover .submenu-arrow {
+color: var(--accent-primary);
+}
+.submenu {
+position: absolute;
+top: 0;
+right: 100%;
+background: var(--bg-tertiary);
+border-radius: 8px;
+box-shadow: 0 4px 20px var(--shadow-color);
+width: 180px;
+padding: 8px 0;
+display: none;
+border: 1px solid var(--border-hover);
+margin-right: 4px;
+}
+.has-submenu:hover .submenu {
+display: block;
+}
+.submenu .menu-item {
+padding: 8px 16px;
+}
+.content {
+flex: 1;
+background: var(--bg-primary);
+position: relative;
+overflow: hidden;
+}
+.iframe-container {
+width: 100%;
+height: 100%;
+position: relative;
+background: var(--bg-primary);
+}
+.tab-iframe {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+border: none;
+display: none;
+background: var(--bg-primary);
+}
+.tab-iframe.active-iframe {
+display: block;
+}
+.history-page {
+color: var(--text-primary);
+background: var(--bg-primary);
+}
+.history-page h2 {
+color: var(--accent-primary);
+}
+.history-page .day-title {
+color: var(--text-secondary);
+border-bottom-color: var(--border-color);
+}
+.history-page .history-item:hover {
+background: var(--bg-hover);
+}
+.history-page .title {
+color: var(--text-primary);
+}
+.history-page .url {
+color: var(--text-secondary);
+}
+.exit-browser-item {
+border-top: 1px solid var(--border-color);
+margin-top: 4px;
+color: var(--accent-primary);
+}
+.exit-browser-item i {
+color: var(--accent-primary);
+}
+.exit-browser-item:hover {
+background: var(--border-hover);
+color: var(--text-primary);
+}
+.exit-browser-item:hover i {
+color: var(--text-primary);
+}
+@media (max-width: 800px) {
+body {
+flex-direction: column;
+}
+.side-nav {
+width: 100%;
+height: auto;
+position: relative;
+flex-direction: row;
+flex-wrap: wrap;
+align-items: center;
+padding: 16px;
+gap: 12px;
+border-right: none;
+border-bottom: 1px solid var(--border-color);
+}
+.letter-nav {
+max-height: none;
+order: 2;
+width: 100%;
+justify-content: flex-start;
+}
+.search-box {
+margin-top: 0;
+order: 3;
+width: 100%;
+}
+.sidebar-footer {
+display: none;
+}
+.main-content {
+padding: 20px;
+}
+.browser-container {
+left: 0;
+}
+}
+×
+⚠️ DISCLAIMER
+This is NOT the official UGS SINGLEFILE. This is a modified version of the file made by
+Drowsey.
+All games here are from the Ultimate Game Stash community on the Document and Discord.
+Google Doc
+Discord
+DROWSEY
+discord
+|
+doc
+UGS - modified by Drowsey
+Theme
+Default
+Red
+Orange
+Yellow
+Green
+Blue
+Indigo
+Violet
+Pink
+Lime
+White
+Black
+Open Browser
+join
+discord
+Fullscreen
+Show bookmarks bar
+History
+Bookmarks
+Settings
+Privacy
+Appearance
+Search engine
+Exit Back To Games
+(function () {
+// --- DISCLAIMER ---
+const disclaimerOverlay = document.getElementById('disclaimerOverlay');
+const closeDisclaimerBtn = document.getElementById('closeDisclaimerBtn');
+const disclaimerCard = document.getElementById('disclaimerCard');
+function closeDisclaimer() {
+disclaimerOverlay.classList.add('hidden');
+}
+closeDisclaimerBtn.addEventListener('click', closeDisclaimer);
+disclaimerOverlay.addEventListener('click', (e) => {
+if (!disclaimerCard.contains(e.target)) {
+closeDisclaimer();
+}
+});
+disclaimerCard.addEventListener('click', (e) => {
+e.stopPropagation();
+});
+// --- THEME PICKER ---
+const themePickerBtn = document.getElementById('themePickerBtn');
+const themeDropdown = document.getElementById('themeDropdown');
+const themeOptions = document.querySelectorAll('.theme-option');
+// Load saved theme or default
+const savedTheme = localStorage.getItem('selectedTheme') || 'default';
+document.body.className = `theme-${savedTheme}`;
+// Update active class in dropdown
+themeOptions.forEach(opt => {
+const theme = opt.dataset.theme;
+if (theme === savedTheme) {
+opt.classList.add('active');
+} else {
+opt.classList.remove('active');
+}
+});
+// Toggle dropdown
+themePickerBtn.addEventListener('click', (e) => {
+e.stopPropagation();
+themeDropdown.classList.toggle('show');
+});
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+if (!themePickerBtn.contains(e.target) && !themeDropdown.contains(e.target)) {
+themeDropdown.classList.remove('show');
+}
+});
+// Theme selection with smooth transition
+themeOptions.forEach(option => {
+option.addEventListener('click', () => {
+const theme = option.dataset.theme;
+// Update body class
+document.body.className = `theme-${theme}`;
+// Save to localStorage
+localStorage.setItem('selectedTheme', theme);
+// Update active states
+themeOptions.forEach(opt => opt.classList.remove('active'));
+option.classList.add('active');
+// Close dropdown
+themeDropdown.classList.remove('show');
+});
+});
+// --- BROWSER TOGGLE STATE WITH SIDEBAR HIDE/SHOW ---
+const browserContainer = document.getElementById('browserContainer');
+const mainContent = document.getElementById('mainContent');
+const sideNav = document.getElementById('sideNav');
+const browserToggleBtn = document.getElementById('browserToggleBtn');
+const exitBrowserBtn = document.getElementById('exitBrowserBtn');
+let browserActive = false;
+let browserInitialized = false;
+function toggleBrowser(active) {
+if (active) {
+// Hide sidebar and main content
+sideNav.classList.add('hidden');
+mainContent.classList.add('hidden');
+// Show browser
+browserContainer.classList.add('active');
+browserActive = true;
+// Initialize browser only once
+if (!browserInitialized) {
+initBrowser();
+browserInitialized = true;
+}
+} else {
+// Show sidebar and main content
+sideNav.classList.remove('hidden');
+mainContent.classList.remove('hidden');
+// Hide browser
+browserContainer.classList.remove('active');
+browserActive = false;
+}
+}
+// Open browser button
+browserToggleBtn.addEventListener('click', () => {
+toggleBrowser(true);
+});
+// Exit browser button in 3-dot menu
+exitBrowserBtn.addEventListener('click', (e) => {
+e.stopPropagation();
+toggleBrowser(false);
+closeDropdown(); // Close the dropdown menu
+});
+// --- BROWSER STATE MANAGEMENT ---
+let tabs = [];
+let activeTabId = null;
+// Bookmarks
+const BOOKMARKS_STORAGE_KEY = 'browser_bookmarks';
+let bookmarks = [];
+let bookmarksBarVisible = false;
+// DOM elements
+const tabsContainer = document.getElementById('tabs-container');
+const newTabBtn = document.getElementById('new-tab-btn');
+const backBtn = document.getElementById('back-btn');
+const forwardBtn = document.getElementById('forward-btn');
+const reloadBtn = document.getElementById('reload-btn');
+const urlInput = document.getElementById('url-input');
+const menuBtn = document.getElementById('menu-btn');
+const menuDropdown = document.getElementById('menu-dropdown');
+const fullscreenOption = document.getElementById('fullscreen-option');
+const historyOption = document.getElementById('history-option');
+const showBookmarksBarItem = document.getElementById('show-bookmarks-bar');
+const bookmarksSubmenu = document.getElementById('bookmarks-submenu');
+const bookmarksBar = document.getElementById('bookmarks-bar');
+const bookmarkStar = document.getElementById('bookmark-star');
+const iframeContainer = document.getElementById('iframe-container');
+// History in localStorage
+const HISTORY_STORAGE_KEY = 'browser_history';
+let historyEntries = [];
+// Load history from localStorage
+function loadHistory() {
+const stored = localStorage.getItem(HISTORY_STORAGE_KEY);
+if (stored) {
+try {
+historyEntries = JSON.parse(stored);
+const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+historyEntries = historyEntries.filter(e => e.timestamp >= oneWeekAgo);
+} catch (e) {
+historyEntries = [];
+}
+} else {
+historyEntries = [];
+}
+}
+function saveHistory() {
+localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(historyEntries));
+}
+function addHistoryEntry(url, title, favicon) {
+if (!url || url === 'about:blank' || url.startsWith('chrome://')) return;
+const now = Date.now();
+historyEntries.push({ url, title, favicon, timestamp: now });
+const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
+historyEntries = historyEntries.filter(e => e.timestamp >= oneWeekAgo);
+saveHistory();
+}
+// Load bookmarks from localStorage
+function loadBookmarks() {
+const stored = localStorage.getItem(BOOKMARKS_STORAGE_KEY);
+if (stored) {
+try {
+bookmarks = JSON.parse(stored);
+} catch (e) {
+bookmarks = [];
+}
+} else {
+bookmarks = [];
+}
+const barVisible = localStorage.getItem('bookmarks_bar_visible');
+bookmarksBarVisible = barVisible === 'true';
+}
+function saveBookmarks() {
+localStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(bookmarks));
+updateBookmarksUI();
+}
+function saveBookmarksBarVisibility() {
+localStorage.setItem('bookmarks_bar_visible', bookmarksBarVisible);
+if (bookmarksBarVisible) {
+bookmarksBar.classList.remove('hidden');
+} else {
+bookmarksBar.classList.add('hidden');
+}
+const icon = showBookmarksBarItem.querySelector('i');
+if (bookmarksBarVisible) {
+icon.classList.remove('far');
+icon.classList.add('fas');
+} else {
+icon.classList.remove('fas');
+icon.classList.add('far');
+}
+}
+function updateBookmarksUI() {
+if (!bookmarksBar || !bookmarksSubmenu) return;
+bookmarksBar.innerHTML = '';
+bookmarks.forEach(bm => {
+const item = document.createElement('div');
+item.className = 'bookmark-item';
+item.setAttribute('data-url', bm.url);
+item.innerHTML = `
+${escapeHtml(bm.title)}
+`;
+item.addEventListener('click', () => {
+if (activeTabId) navigateToUrl(bm.url, activeTabId);
+});
+bookmarksBar.appendChild(item);
+});
+bookmarksSubmenu.innerHTML = '';
+if (bookmarks.length === 0) {
+const emptyItem = document.createElement('div');
+emptyItem.className = 'menu-item';
+emptyItem.textContent = 'No bookmarks';
+emptyItem.style.cursor = 'default';
+emptyItem.style.color = 'var(--text-secondary)';
+bookmarksSubmenu.appendChild(emptyItem);
+} else {
+bookmarks.forEach(bm => {
+const item = document.createElement('div');
+item.className = 'menu-item';
+item.setAttribute('data-url', bm.url);
+item.innerHTML = `
+${escapeHtml(bm.title)}
+`;
+item.addEventListener('click', (e) => {
+e.stopPropagation();
+if (activeTabId) navigateToUrl(bm.url, activeTabId);
+closeDropdown();
+});
+bookmarksSubmenu.appendChild(item);
+});
+}
+}
+function isBookmarked(url) {
+return bookmarks.some(b => b.url === url);
+}
+function toggleBookmark() {
+const activeTab = tabs.find(t => t.id === activeTabId);
+if (!activeTab || !activeTab.url || activeTab.url === 'about:blank' || activeTab.url.startsWith('chrome://')) {
+alert('Cannot bookmark this page');
+return;
+}
+const url = activeTab.url;
+const index = bookmarks.findIndex(b => b.url === url);
+if (index >= 0) {
+bookmarks.splice(index, 1);
+bookmarkStar.classList.remove('fas');
+bookmarkStar.classList.add('far');
+} else {
+bookmarks.push({
+url: url,
+title: activeTab.title,
+favicon: activeTab.favicon
+});
+bookmarkStar.classList.remove('far');
+bookmarkStar.classList.add('fas');
+}
+saveBookmarks();
+}
+function updateStarIcon() {
+const activeTab = tabs.find(t => t.id === activeTabId);
+if (activeTab && isBookmarked(activeTab.url)) {
+bookmarkStar.classList.remove('far');
+bookmarkStar.classList.add('fas');
+} else {
+bookmarkStar.classList.remove('fas');
+bookmarkStar.classList.add('far');
+}
+}
+function generateId() {
+return Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+}
+function domainFromUrl(url) {
+if (!url || url === 'about:blank' || url.startsWith('chrome://')) return null;
+try {
+const urlObj = new URL(url);
+let host = urlObj.hostname;
+host = host.replace(/^www\./, '');
+if (/^\d+\.\d+\.\d+\.\d+$/.test(host)) return host;
+const parts = host.split('.');
+if (parts.length >= 2) {
+return parts[parts.length - 2];
+}
+return parts[0];
+} catch (e) {
+return null;
+}
+}
+function formatTitleFromUrl(url) {
+if (!url || url === 'about:blank') return 'New Tab';
+if (url === 'chrome://history') return 'History';
+const domain = domainFromUrl(url);
+if (domain) {
+return domain.charAt(0).toUpperCase() + domain.slice(1);
+}
+try {
+const urlObj = new URL(url);
+return urlObj.hostname || url;
+} catch {
+return url.length > 30 ? url.substring(0, 30) + '…' : url;
+}
+}
+function faviconUrlFromUrl(url) {
+if (!url || url === 'about:blank') return null;
+if (url === 'chrome://history') return 'https://img.icons8.com/ios/452/history.png';
+try {
+const urlObj = new URL(url);
+const domain = urlObj.hostname;
+return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+} catch {
+return null;
+}
+}
+function createIframeForTab(tab, src = 'about:blank') {
+const iframe = document.createElement('iframe');
+iframe.className = 'tab-iframe';
+iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms allow-modals');
+iframe.setAttribute('allowfullscreen', 'true');
+if (src === 'chrome://history') {
+iframe.srcdoc = generateHistoryHTML();
+iframe.addEventListener('load', function () {
+try {
+const doc = iframe.contentDocument || iframe.contentWindow.document;
+doc.querySelectorAll('.history-item').forEach(el => {
+el.addEventListener('click', () => {
+const url = el.dataset.url;
+if (url) navigateToUrl(url, tab.id);
+});
+});
+} catch (e) { }
+});
+} else {
+iframe.src = src;
+}
+if (src !== 'chrome://history') {
+iframe.addEventListener('load', function () {
+const currentUrl = iframe.src;
+tab.url = currentUrl;
+tab.title = formatTitleFromUrl(currentUrl);
+tab.favicon = faviconUrlFromUrl(currentUrl);
+if (currentUrl && !currentUrl.startsWith('about:') && !currentUrl.startsWith('chrome://')) {
+addHistoryEntry(currentUrl, tab.title, tab.favicon);
+}
+if (tab.id === activeTabId) {
+refreshUI();
+} else {
+renderTabs();
+}
+});
+}
+tab.iframe = iframe;
+tab.url = src;
+tab.title = formatTitleFromUrl(src);
+tab.favicon = faviconUrlFromUrl(src);
+iframeContainer.appendChild(iframe);
+return iframe;
+}
+function removeIframeForTab(tab) {
+if (tab.iframe && tab.iframe.parentNode) {
+tab.iframe.parentNode.removeChild(tab.iframe);
+}
+tab.iframe = null;
+}
+function updateIframesVisibility() {
+tabs.forEach(tab => {
+if (tab.iframe) {
+if (tab.id === activeTabId) {
+tab.iframe.classList.add('active-iframe');
+} else {
+tab.iframe.classList.remove('active-iframe');
+}
+}
+});
+}
+function updateNavButtons() {
+const currentTab = tabs.find(t => t.id === activeTabId);
+if (!currentTab) {
+backBtn.disabled = true;
+forwardBtn.disabled = true;
+return;
+}
+backBtn.disabled = (currentTab.historyIndex <= 0);
+forwardBtn.disabled = (currentTab.historyIndex >= currentTab.history.length - 1);
+}
+function renderTabs() {
+let html = '';
+tabs.forEach(tab => {
+const isActive = (tab.id === activeTabId);
+const showClose = tabs.length > 1;
+const closeIcon = showClose ? '' : '';
+const faviconHtml = tab.favicon
+? ``
+: '';
+html += `
+${faviconHtml}
+${escapeHtml(tab.title || 'Tab')}
+${closeIcon}
+`;
+});
+tabsContainer.innerHTML = html;
+updateNavButtons();
+}
+function escapeHtml(unsafe) {
+return unsafe.replace(/[&<>"]/g, function (m) {
+if (m === '&') return '&'; if (m === '<') return '<'; if (m === '>') return '>'; if (m === '"') return '"';
+return m;
+});
+}
+function refreshUI() {
+renderTabs();
+updateIframesVisibility();
+updateUrlInputFromActiveTab();
+updateNavButtons();
+updateStarIcon();
+}
+function updateUrlInputFromActiveTab() {
+const active = tabs.find(t => t.id === activeTabId);
+if (active) {
+urlInput.value = active.url || 'about:blank';
+} else {
+urlInput.value = '';
+}
+}
+function generateHistoryHTML() {
+const entries = [...historyEntries].reverse();
+const groups = {};
+entries.forEach(entry => {
+const date = new Date(entry.timestamp);
+const dateStr = date.toISOString().split('T')[0];
+const todayStr = new Date().toISOString().split('T')[0];
+const yesterdayStr = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+let displayDate;
+if (dateStr === todayStr) displayDate = 'Today';
+else if (dateStr === yesterdayStr) displayDate = 'Yesterday';
+else displayDate = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+if (!groups[displayDate]) groups[displayDate] = [];
+groups[displayDate].push(entry);
+});
+let html = `
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg-primary); padding: 20px; margin: 0; }
+h2 { color: var(--accent-primary); font-weight: 500; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+.day-group { margin-bottom: 30px; }
+.day-title { font-size: 14px; font-weight: 500; color: var(--text-secondary); margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; }
+.history-item { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; }
+.history-item:hover { background: var(--bg-hover); border-color: var(--border-hover); }
+.history-item img { width: 16px; height: 16px; filter: brightness(0.9); }
+.history-item .info { flex: 1; }
+.history-item .title { font-size: 14px; color: var(--text-primary); }
+.history-item .url { font-size: 12px; color: var(--text-secondary); }
+History
+`;
+if (entries.length === 0) {
+html += 'No history yet. Visit some websites!';
+} else {
+for (const [day, items] of Object.entries(groups)) {
+html += `${day}`;
+items.forEach(item => {
+const favicon = item.favicon || 'https://www.google.com/s2/favicons?domain=example.com';
+html += `
+${escapeHtml(item.title)}
+${escapeHtml(item.url)}
+`;
+});
+html += '';
+}
+}
+html += '';
+return html;
+}
+function switchTab(tabId) {
+if (!tabs.some(t => t.id === tabId)) return;
+activeTabId = tabId;
+refreshUI();
+}
+function addTab() {
+const newId = generateId();
+const newTab = {
+id: newId,
+url: 'about:blank',
+title: 'New Tab',
+favicon: null,
+history: ['about:blank'],
+historyIndex: 0
+};
+createIframeForTab(newTab, 'about:blank');
+tabs.push(newTab);
+activeTabId = newId;
+refreshUI();
+}
+function closeTab(tabId) {
+if (tabs.length <= 1) return;
+const index = tabs.findIndex(t => t.id === tabId);
+if (index === -1) return;
+const tabToRemove = tabs[index];
+const wasActive = (tabToRemove.id === activeTabId);
+removeIframeForTab(tabToRemove);
+tabs.splice(index, 1);
+if (wasActive) {
+if (index < tabs.length) {
+activeTabId = tabs[index].id;
+} else {
+activeTabId = tabs[tabs.length - 1].id;
+}
+}
+refreshUI();
+}
+function navigateToUrl(rawUrl, tabId) {
+const tab = tabs.find(t => t.id === tabId);
+if (!tab || !tab.iframe) return;
+let url = rawUrl.trim();
+if (url === '') url = 'about:blank';
+if (!url.match(/^[a-zA-Z]+:\/\//) && url !== 'about:blank' && !url.startsWith('chrome://')) {
+url = 'https://' + url;
+}
+if (url === 'chrome://history') {
+tab.url = url;
+tab.title = 'History';
+tab.favicon = 'https://img.icons8.com/ios/452/history.png';
+tab.iframe.srcdoc = generateHistoryHTML();
+tab.iframe.onload = () => {
+try {
+const doc = tab.iframe.contentDocument || tab.iframe.contentWindow.document;
+doc.querySelectorAll('.history-item').forEach(el => {
+el.addEventListener('click', () => {
+const historyUrl = el.dataset.url;
+if (historyUrl) navigateToUrl(historyUrl, tab.id);
+});
+});
+} catch (e) { }
+};
+tab.history = tab.history.slice(0, tab.historyIndex + 1);
+tab.history.push(url);
+tab.historyIndex = tab.history.length - 1;
+if (tabId === activeTabId) refreshUI();
+else renderTabs();
+return;
+}
+tab.history = tab.history.slice(0, tab.historyIndex + 1);
+tab.history.push(url);
+tab.historyIndex = tab.history.length - 1;
+tab.url = url;
+tab.iframe.src = url;
+tab.title = formatTitleFromUrl(url);
+tab.favicon = faviconUrlFromUrl(url);
+if (tabId === activeTabId) {
+refreshUI();
+} else {
+renderTabs();
+}
+}
+function toggleDropdown(show) {
+if (show === undefined) {
+menuDropdown.classList.toggle('show');
+} else if (show) {
+menuDropdown.classList.add('show');
+} else {
+menuDropdown.classList.remove('show');
+}
+}
+function closeDropdown() {
+menuDropdown.classList.remove('show');
+}
+function initBrowser() {
+loadHistory();
+loadBookmarks();
+saveBookmarksBarVisibility();
+updateBookmarksUI();
+menuBtn.addEventListener('click', (e) => {
+e.stopPropagation();
+toggleDropdown();
+});
+document.addEventListener('click', (e) => {
+if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
+closeDropdown();
+}
+});
+fullscreenOption.addEventListener('click', () => {
+const activeTab = tabs.find(t => t.id === activeTabId);
+if (activeTab && activeTab.iframe) {
+if (activeTab.iframe.requestFullscreen) {
+activeTab.iframe.requestFullscreen();
+} else if (activeTab.iframe.webkitRequestFullscreen) {
+activeTab.iframe.webkitRequestFullscreen();
+} else if (activeTab.iframe.msRequestFullscreen) {
+activeTab.iframe.msRequestFullscreen();
+} else {
+alert('Fullscreen not supported on this iframe');
+}
+}
+closeDropdown();
+});
+showBookmarksBarItem.addEventListener('click', (e) => {
+e.stopPropagation();
+bookmarksBarVisible = !bookmarksBarVisible;
+saveBookmarksBarVisibility();
+closeDropdown();
+});
+historyOption.addEventListener('click', () => {
+const newId = generateId();
+const newTab = {
+id: newId,
+url: 'chrome://history',
+title: 'History',
+favicon: 'https://img.icons8.com/ios/452/history.png',
+history: ['chrome://history'],
+historyIndex: 0
+};
+createIframeForTab(newTab, 'chrome://history');
+tabs.push(newTab);
+activeTabId = newId;
+refreshUI();
+closeDropdown();
+});
+document.querySelectorAll('.submenu .menu-item[data-settings]').forEach(item => {
+item.addEventListener('click', (e) => {
+e.stopPropagation();
+const setting = item.getAttribute('data-settings');
+alert(`Settings: ${setting} clicked (placeholder)`);
+closeDropdown();
+});
+});
+bookmarkStar.addEventListener('click', toggleBookmark);
+tabsContainer.addEventListener('click', (e) => {
+const tabEl = e.target.closest('.tab');
+if (!tabEl) return;
+const tabId = tabEl.dataset.id;
+if (e.target.closest('.close-tab')) {
+e.stopPropagation();
+closeTab(tabId);
+} else {
+switchTab(tabId);
+}
+});
+newTabBtn.addEventListener('click', addTab);
+backBtn.addEventListener('click', () => {
+const tab = tabs.find(t => t.id === activeTabId);
+if (!tab || tab.historyIndex <= 0) return;
+tab.historyIndex--;
+const prevUrl = tab.history[tab.historyIndex];
+navigateToUrl(prevUrl, tab.id);
+});
+forwardBtn.addEventListener('click', () => {
+const tab = tabs.find(t => t.id === activeTabId);
+if (!tab || tab.historyIndex >= tab.history.length - 1) return;
+tab.historyIndex++;
+const nextUrl = tab.history[tab.historyIndex];
+navigateToUrl(nextUrl, tab.id);
+});
+reloadBtn.addEventListener('click', () => {
+const tab = tabs.find(t => t.id === activeTabId);
+if (tab && tab.iframe) {
+if (tab.url === 'chrome://history') {
+tab.iframe.srcdoc = generateHistoryHTML();
+} else {
+tab.iframe.src = tab.iframe.src;
+}
+}
+});
+urlInput.addEventListener('keypress', (e) => {
+if (e.key === 'Enter') {
+e.preventDefault();
+const newUrl = urlInput.value;
+if (activeTabId) {
+navigateToUrl(newUrl, activeTabId);
+}
+}
+});
+const defaultTab = {
+id: generateId(),
+url: 'about:blank',
+title: 'New Tab',
+favicon: null,
+history: ['about:blank'],
+historyIndex: 0
+};
+createIframeForTab(defaultTab, 'about:blank');
+tabs = [defaultTab];
+activeTabId = defaultTab.id;
+refreshUI();
+}
+// --- ORIGINAL GAME CODE (keep all the game functionality) ---
+let pinnedGames = [];
+let recentGames = [];
+let recentExpanded = false;
+const gameClickHandlers = {};
+const sectionsContainer = document.getElementById('sections-container');
+const statusEl = document.getElementById('statusMessage');
+const letterNav = document.getElementById('letterNav');
+const searchInput = document.getElementById('searchInput');
+const searchResultsCount = document.getElementById('searchResultsCount');
+let allSections = [];
+let pinnedSectionEl = null;
+let recentSectionEl = null;
+// Scratch games data - THESE HAVE THEIR OWN CLICK HANDLER
+const scratchGames = [
+{ name: 'SNaN 2 Remastered', file: 'SNaN_2_Remastered.html', url: 'https://paste.c-net.org/WaitressTarot' }
+// Add more Scratch games here later
+];
+let scratchSectionEl = null;
+let scratchExpanded = false;
+function getGameFromCard(card) {
+const file = card.dataset.file;
+const label = card.dataset.label;
+return { file, label };
+}
+function loadPinned() {
+try {
+const stored = localStorage.getItem('pinnedGames');
+pinnedGames = stored ? JSON.parse(stored) : [];
+} catch { pinnedGames = []; }
+}
+function loadRecent() {
+try {
+const stored = localStorage.getItem('recentGames');
+recentGames = stored ? JSON.parse(stored) : [];
+} catch { recentGames = []; }
+}
+function savePinned() {
+localStorage.setItem('pinnedGames', JSON.stringify(pinnedGames));
+}
+function saveRecent() {
+localStorage.setItem('recentGames', JSON.stringify(recentGames));
+}
+loadPinned();
+loadRecent();
+function clearAllRecent() {
+recentGames = [];
+saveRecent();
+renderRecentSection();
+}
+function removeFromRecent(file) {
+recentGames = recentGames.filter(g => g.file !== file);
+saveRecent();
+renderRecentSection();
+}
+function renderPinnedSection() {
+if (!pinnedSectionEl) {
+pinnedSectionEl = document.createElement('div');
+pinnedSectionEl.id = 'pinned-section';
+pinnedSectionEl.className = 'top-section pinned-section';
+sectionsContainer.prepend(pinnedSectionEl);
+}
+const header = document.createElement('div');
+header.className = 'top-header';
+header.innerHTML = ` Pinned Games ${pinnedGames.length}`;
+const grid = document.createElement('div');
+grid.className = 'games-grid';
+if (pinnedGames.length === 0) {
+grid.innerHTML = '📌 No pinned games yet — hover over any game and click the pin.';
+} else {
+pinnedGames.forEach((game, index) => {
+const card = document.createElement('div');
+card.className = 'game-card';
+card.dataset.file = game.file;
+card.dataset.label = game.label;
+card.setAttribute('tabindex', '0');
+card.innerHTML = `
+${game.label}
+`;
+card.querySelector('.move-left').addEventListener('click', (e) => {
+e.stopPropagation();
+const newIndex = (index - 1 + pinnedGames.length) % pinnedGames.length;
+[pinnedGames[index], pinnedGames[newIndex]] = [pinnedGames[newIndex], pinnedGames[index]];
+savePinned();
+renderPinnedSection();
+updatePinIconsOnAllCards();
+});
+card.querySelector('.move-right').addEventListener('click', (e) => {
+e.stopPropagation();
+const newIndex = (index + 1) % pinnedGames.length;
+[pinnedGames[index], pinnedGames[newIndex]] = [pinnedGames[newIndex], pinnedGames[index]];
+savePinned();
+renderPinnedSection();
+updatePinIconsOnAllCards();
+});
+card.querySelector('.unpin-btn').addEventListener('click', (e) => {
+e.stopPropagation();
+pinnedGames = pinnedGames.filter((_, i) => i !== index);
+savePinned();
+renderPinnedSection();
+updatePinIconsOnAllCards();
+});
+card.addEventListener('click', (e) => {
+e.stopPropagation();
+handleGameClick(game.file, game.label);
+});
+grid.appendChild(card);
+});
+}
+pinnedSectionEl.innerHTML = '';
+pinnedSectionEl.appendChild(header);
+pinnedSectionEl.appendChild(grid);
+}
+function renderRecentSection() {
+if (!recentSectionEl) {
+recentSectionEl = document.createElement('div');
+recentSectionEl.id = 'recent-section';
+recentSectionEl.className = 'top-section';
+if (pinnedSectionEl) {
+pinnedSectionEl.after(recentSectionEl);
+} else {
+sectionsContainer.prepend(recentSectionEl);
+}
+}
+const header = document.createElement('div');
+header.className = 'top-header';
+header.innerHTML = `
+Recent Games
+${recentGames.length}
+${recentGames.length > 0 ? ' Clear Recent' : ''}
+`;
+const clearBtn = header.querySelector('.clear-recent-btn');
+if (clearBtn) {
+clearBtn.addEventListener('click', (e) => {
+e.stopPropagation();
+clearAllRecent();
+});
+}
+const grid = document.createElement('div');
+grid.className = 'games-grid';
+const displayGames = recentExpanded ? recentGames : recentGames.slice(0, 10);
+if (displayGames.length === 0) {
+grid.innerHTML = '🕒 No recent games — click any game to start playing.';
+} else {
+displayGames.forEach(game => {
+const card = document.createElement('div');
+card.className = 'game-card';
+card.dataset.file = game.file;
+card.dataset.label = game.label;
+card.setAttribute('tabindex', '0');
+card.innerHTML = `
+${game.label}
+`;
+const deleteBtn = card.querySelector('.delete-recent-btn');
+deleteBtn.addEventListener('click', (e) => {
+e.stopPropagation();
+removeFromRecent(game.file);
+});
+card.addEventListener('click', (e) => {
+if (e.target.closest('.delete-recent-btn')) return;
+handleGameClick(game.file, game.label);
+});
+grid.appendChild(card);
+});
+}
+const footer = document.createElement('div');
+if (recentGames.length > 10) {
+const expandBtn = document.createElement('span');
+expandBtn.className = 'recent-expand-btn';
+expandBtn.innerHTML = recentExpanded ? '🔼 Show less' : '🔽 Show all';
+expandBtn.addEventListener('click', (e) => {
+e.stopPropagation();
+recentExpanded = !recentExpanded;
+renderRecentSection();
+});
+footer.appendChild(expandBtn);
+}
+recentSectionEl.innerHTML = '';
+recentSectionEl.appendChild(header);
+recentSectionEl.appendChild(grid);
+if (footer.children.length) recentSectionEl.appendChild(footer);
+}
+// NEW: Render Scratch games section with SEPARATE click handler
+function renderScratchSection() {
+if (!scratchSectionEl) {
+scratchSectionEl = document.createElement('div');
+scratchSectionEl.id = 'scratch-section';
+scratchSectionEl.className = 'top-section';
+sectionsContainer.appendChild(scratchSectionEl);
+}
+const header = document.createElement('div');
+header.className = 'top-header';
+header.innerHTML = `
+Scratch Uploads
+${scratchGames.length}
+`;
+const grid = document.createElement('div');
+grid.className = 'games-grid';
+const displayGames = scratchExpanded ? scratchGames : scratchGames.slice(0, 10);
+if (displayGames.length === 0) {
+grid.innerHTML = '🎮 No Scratch games available.';
+} else {
+displayGames.forEach(game => {
+const card = document.createElement('div');
+card.className = 'game-card';
+card.dataset.file = game.file;
+card.dataset.label = game.name;
+card.setAttribute('tabindex', '0');
+card.innerHTML = `
+${game.name}
+`;
+// SEPARATE CLICK HANDLER FOR SCRATCH GAMES
+card.addEventListener('click', (e) => {
+if (e.target.closest('.pin-btn')) return;
+// Add to recent games
+addToRecent(game.file, game.name);
+// Open the Scratch game using fetch and document.write
+const newWin = window.open("about:blank", "_blank");
+if (newWin) {
+newWin.document.write('Loading game...');
+fetch(game.url + '?t=' + Date.now())
+.then(response => response.text())
+.then(html => {
+newWin.document.open();
+newWin.document.write(html);
+newWin.document.close();
+})
+.catch(error => {
+newWin.document.write('Error loading game: ' + error + '');
+});
+}
+});
+grid.appendChild(card);
+});
+}
+const footer = document.createElement('div');
+if (scratchGames.length > 10) {
+const expandBtn = document.createElement('span');
+expandBtn.className = 'recent-expand-btn';
+expandBtn.innerHTML = scratchExpanded ? '🔼 Show less' : '🔽 Show all';
+expandBtn.addEventListener('click', (e) => {
+e.stopPropagation();
+scratchExpanded = !scratchExpanded;
+renderScratchSection();
+});
+footer.appendChild(expandBtn);
+}
+scratchSectionEl.innerHTML = '';
+scratchSectionEl.appendChild(header);
+scratchSectionEl.appendChild(grid);
+if (footer.children.length) scratchSectionEl.appendChild(footer);
+}
+function updatePinIconsOnAllCards() {
+document.querySelectorAll('.game-card:not(.pinned-section .game-card):not(.recent-section .game-card):not(#scratch-section .game-card)').forEach(card => {
+const pinBtn = card.querySelector('.pin-btn');
+if (!pinBtn) return;
+const { file } = getGameFromCard(card);
+const isPinned = pinnedGames.some(p => p.file === file);
+pinBtn.innerHTML = isPinned ? '' : '';
+});
+}
+function addToRecent(file, label) {
+recentGames = recentGames.filter(g => g.file !== file);
+recentGames.unshift({ file, label });
+if (recentGames.length > 50) recentGames.pop();
+saveRecent();
+renderRecentSection();
+}
+function handleGameClick(file, label) {
+addToRecent(file, label);
+if (gameClickHandlers[file]) {
+gameClickHandlers[file]();
+}
+}
+function togglePin(file, label) {
+const index = pinnedGames.findIndex(p => p.file === file);
+if (index === -1) {
+pinnedGames.unshift({ file, label });
+} else {
+pinnedGames.splice(index, 1);
+}
+savePinned();
+renderPinnedSection();
+updatePinIconsOnAllCards();
+}
+function createGameCard(file, displayName, originalClick) {
+if (originalClick) {
+gameClickHandlers[file] = originalClick;
+}
+const card = document.createElement('div');
+card.className = 'game-card';
+card.setAttribute('tabindex', '0');
+card.dataset.file = file;
+card.dataset.label = displayName;
+card.innerHTML = `
+${displayName}
+`;
+return card;
+}
+function transformToCards() {
+const sections = document.querySelectorAll('.letter-section');
+allSections = [];
+const fragment = document.createDocumentFragment();
+sections.forEach(section => {
+const header = section.querySelector('.letter-header');
+if (!header) return;
+const letter = header.innerText.trim().charAt(0);
+const container = section.querySelector('.buttons-container');
+if (!container) return;
+const grid = document.createElement('div');
+grid.className = 'games-grid';
+const buttons = Array.from(container.querySelectorAll('input[type="button"]'));
+buttons.forEach(btn => {
+const file = btn.value;
+const displayName = window.gameLabels?.[file] || file;
+const originalClick = btn.onclick;
+const card = createGameCard(file, displayName, originalClick);
+grid.appendChild(card);
+});
+container.parentNode.replaceChild(grid, container);
+allSections.push({
+element: section,
+letter: letter,
+cards: Array.from(grid.children)
+});
+fragment.appendChild(section);
+});
+sectionsContainer.innerHTML = '';
+sectionsContainer.appendChild(fragment);
+// Add Scratch section (with its own click handler)
+renderScratchSection();
+setupEventDelegation();
+updatePinIconsOnAllCards();
+renderPinnedSection();
+renderRecentSection();
+if (pinnedSectionEl && recentSectionEl) {
+sectionsContainer.prepend(pinnedSectionEl);
+pinnedSectionEl.after(recentSectionEl);
+} else if (pinnedSectionEl) {
+sectionsContainer.prepend(pinnedSectionEl);
+} else if (recentSectionEl) {
+sectionsContainer.prepend(recentSectionEl);
+}
+updateLetterNav();
+}
+function setupEventDelegation() {
+sectionsContainer.addEventListener('click', (e) => {
+const card = e.target.closest('.game-card');
+if (!card) return;
+// Skip if this is a Scratch game card - they have their own handler
+if (card.closest('#scratch-section')) return;
+const pinBtn = e.target.closest('.pin-btn');
+if (pinBtn) {
+e.stopPropagation();
+const { file, label } = getGameFromCard(card);
+togglePin(file, label);
+return;
+}
+if (e.target.closest('.pinned-controls')) return;
+if (e.target.closest('.delete-recent-btn')) return;
+const { file, label } = getGameFromCard(card);
+handleGameClick(file, label);
+});
+}
+function updateLetterNav() {
+if (!allSections.length) return;
+const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+letterNav.innerHTML = '';
+alphabet.forEach(letter => {
+const btn = document.createElement('div');
+btn.className = `letter-btn`;
+btn.textContent = letter;
+// Check if this letter has any games
+const section = allSections.find(s => s.letter === letter);
+if (section && section.cards.length > 0) {
+btn.setAttribute('data-letter', letter);
+btn.addEventListener('click', () => {
+section.element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+} else {
+btn.classList.add('empty-letter');
+}
+letterNav.appendChild(btn);
+});
+// Add Scratch button at the end
+const scratchBtn = document.createElement('div');
+scratchBtn.className = 'letter-btn';
+scratchBtn.textContent = '🎮';
+scratchBtn.setAttribute('data-letter', 'scratch');
+scratchBtn.addEventListener('click', () => {
+if (scratchSectionEl) {
+scratchSectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+});
+letterNav.appendChild(scratchBtn);
+}
+function filterGames(searchTerm) {
+if (!allSections.length) return;
+const term = searchTerm.trim().toLowerCase();
+requestAnimationFrame(() => {
+let totalVisible = 0;
+const hideClass = 'hidden-section';
+allSections.forEach(section => {
+const cards = section.cards;
+let visibleCount = 0;
+for (let i = 0; i < cards.length; i++) {
+const card = cards[i];
+const gameName = card.querySelector('.game-name')?.innerText.toLowerCase() || '';
+const matches = term === '' || gameName.includes(term);
+if (matches) {
+card.classList.remove('hidden-card');
+visibleCount++;
+} else {
+card.classList.add('hidden-card');
+}
+}
+if (visibleCount === 0 && term !== '') {
+section.element.classList.add(hideClass);
+} else {
+section.element.classList.remove(hideClass);
+totalVisible += visibleCount;
+}
+});
+if (pinnedSectionEl) {
+const pinnedCards = Array.from(pinnedSectionEl.querySelectorAll('.game-card'));
+let visibleCount = 0;
+pinnedCards.forEach(card => {
+const gameName = card.querySelector('.game-name')?.innerText.toLowerCase() || '';
+const matches = term === '' || gameName.includes(term);
+if (matches) {
+card.classList.remove('hidden-card');
+visibleCount++;
+} else {
+card.classList.add('hidden-card');
+}
+});
+if (visibleCount === 0 && term !== '') {
+pinnedSectionEl.classList.add(hideClass);
+} else {
+pinnedSectionEl.classList.remove(hideClass);
+totalVisible += visibleCount;
+}
+}
+if (recentSectionEl) {
+const recentCards = Array.from(recentSectionEl.querySelectorAll('.game-card'));
+let visibleCount = 0;
+recentCards.forEach(card => {
+const gameName = card.querySelector('.game-name')?.innerText.toLowerCase() || '';
+const matches = term === '' || gameName.includes(term);
+if (matches) {
+card.classList.remove('hidden-card');
+visibleCount++;
+} else {
+card.classList.add('hidden-card');
+}
+});
+if (visibleCount === 0 && term !== '') {
+recentSectionEl.classList.add(hideClass);
+} else {
+recentSectionEl.classList.remove(hideClass);
+totalVisible += visibleCount;
+}
+}
+if (scratchSectionEl) {
+const scratchCards = Array.from(scratchSectionEl.querySelectorAll('.game-card'));
+let visibleCount = 0;
+scratchCards.forEach(card => {
+const gameName = card.querySelector('.game-name')?.innerText.toLowerCase() || '';
+const matches = term === '' || gameName.includes(term);
+if (matches) {
+card.classList.remove('hidden-card');
+visibleCount++;
+} else {
+card.classList.add('hidden-card');
+}
+});
+if (visibleCount === 0 && term !== '') {
+scratchSectionEl.classList.add(hideClass);
+} else {
+scratchSectionEl.classList.remove(hideClass);
+totalVisible += visibleCount;
+}
+}
+if (term === '') {
+searchResultsCount.textContent = '';
+} else {
+searchResultsCount.textContent = `(${totalVisible} results)`;
+}
+let msg = document.getElementById('no-match-message');
+if (totalVisible === 0 && term !== '') {
+if (!msg) {
+msg = document.createElement('div');
+msg.id = 'no-match-message';
+msg.className = 'no-games-message';
+sectionsContainer.appendChild(msg);
+}
+msg.textContent = `✨ no games matching "${term}"`;
+} else {
+if (msg) msg.remove();
+}
+});
+}
+const style = document.createElement('style');
+style.textContent = `
+.game-card.hidden-card {
+display: none !important;
+}
+.main-content.hidden {
+display: none;
+}
+.side-nav.hidden {
+transform: translateX(-100%);
+opacity: 0;
+pointer-events: none;
+}
+`;
+document.head.appendChild(style);
+function loadAndEnhance() {
+statusEl.textContent = '📦 loading game stash...';
+const oldScript = document.querySelector('script[src*="ugs-singlefile"]');
+if (oldScript) oldScript.remove();
+const script = document.createElement('script');
+script.src = 'https://cdn.jsdelivr.net/gh/bubbls/ugs-singlefile@main/games.js';
+script.async = true;
+script.onload = () => {
+statusEl.textContent = '';
+const newerFiles = [];
+const getFirstChar = (file) => {
+const lower = file.toLowerCase();
+if (lower.startsWith('cl')) {
+const after = lower.substring(2);
+return after.length > 0 ? after[0].toUpperCase() : '';
+}
+return '';
+};
+// ORIGINAL CLICK HANDLER FOR REGULAR GAMES
+const createGameButton = (file) => {
+const btn = document.createElement('input');
+btn.type = 'button';
+btn.value = file;
+btn.style.width = '100%';
+btn.style.height = '100%';
+btn.onclick = () => {
+const normalizeFileName = (name) => {
+if (name.includes('.') && name.lastIndexOf('.') > 0) return name;
+return name + '.html';
+};
+const normalized = normalizeFileName(file);
+const encoded = encodeURIComponent(normalized);
+fetch(`https://cdn.jsdelivr.net/gh/bubbls/ugs-singlefile/UGS-Files/${encoded}?t=${Date.now()}`)
+.then(response => response.text())
+.then(text => {
+const newWin = window.open("about:blank", "_blank");
+if (newWin) {
+newWin.document.open();
+newWin.document.write(text);
+newWin.document.close();
+}
+});
+};
+return btn;
+};
+newerFiles.forEach(file => {
+const firstChar = getFirstChar(file);
+if (!firstChar) return;
+let section = document.getElementById(`section-${firstChar}`);
+if (!section) {
+section = document.createElement('div');
+section.className = 'letter-section';
+section.id = `section-${firstChar}`;
+const header = document.createElement('div');
+header.className = 'letter-header';
+header.textContent = firstChar;
+section.appendChild(header);
+const container = document.createElement('div');
+container.className = 'buttons-container';
+section.appendChild(container);
+const containerParent = document.getElementById('sections-container');
+const existingSections = Array.from(containerParent.children);
+let inserted = false;
+for (let i = 0; i < existingSections.length; i++) {
+const id = existingSections[i].id;
+if (id && id.startsWith('section-')) {
+const existingChar = id.replace('section-', '');
+if (firstChar < existingChar) {
+containerParent.insertBefore(section, existingSections[i]);
+inserted = true;
+break;
+}
+}
+}
+if (!inserted) containerParent.appendChild(section);
+}
+const buttonsContainer = section.querySelector('.buttons-container');
+if (buttonsContainer) {
+buttonsContainer.appendChild(createGameButton(file));
+}
+});
+setTimeout(() => {
+transformToCards();
+}, 80);
+};
+script.onerror = () => {
+statusEl.textContent = '⚠️ failed to load games. check connection.';
+sectionsContainer.innerHTML = 'could not load data. refresh?';
+};
+document.body.appendChild(script);
+}
+loadAndEnhance();
+let searchTimeout;
+let lastSearchTerm = '';
+searchInput.addEventListener('input', () => {
+const currentTerm = searchInput.value;
+if (searchTimeout) {
+clearTimeout(searchTimeout);
+}
+if (currentTerm === lastSearchTerm) return;
+searchTimeout = setTimeout(() => {
+lastSearchTerm = currentTerm;
+filterGames(currentTerm);
+}, 100);
+});
+})();
