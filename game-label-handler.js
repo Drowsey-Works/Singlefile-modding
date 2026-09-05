@@ -2608,8 +2608,8 @@ window.gameLabels = {
     "cltinyfishing": "Tiny Fishing",
     "clunownking": "Unown King",
     "clwinterolympics": "Winter Olympics",
-    "clwolfchild": "Wolfchild",
-    "zen-fisher": "Zen Fisher (by Me :3)"
+    "drw_wolfchild": "Wolfchild",
+    "drw_zen-fisher": "Zen Fisher (by Me :3)"
 };
 
 (function () {
