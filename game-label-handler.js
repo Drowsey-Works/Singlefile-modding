@@ -3051,11 +3051,32 @@ window.gameLabels = {
             .toLowerCase();
     }
 
+    // Resolves once window.gameLabels is a non-empty object.
+    // If it's already there, resolves immediately.
+    function waitForGameLabels(timeoutMs = 30000) {
+        if (window.gameLabels && typeof window.gameLabels === 'object'
+            && Object.keys(window.gameLabels).length > 0) {
+            return Promise.resolve();
+        }
+
+        return new Promise((resolve) => {
+            const start = Date.now();
+            const interval = setInterval(() => {
+                if (window.gameLabels && typeof window.gameLabels === 'object'
+                    && Object.keys(window.gameLabels).length > 0) {
+                    clearInterval(interval);
+                    resolve();
+                } else if (Date.now() - start > timeoutMs) {
+                    clearInterval(interval);
+                    console.warn('[labels] Timed out waiting for gameLabels');
+                    resolve(); // resolve anyway so we don't hang forever
+                }
+            }, 50);
+        });
+    }
+
     function applyGameLabels() {
-        if (
-            !window.gameLabels ||
-            typeof window.gameLabels !== 'object'
-        ) {
+        if (!window.gameLabels || typeof window.gameLabels !== 'object') {
             return false;
         }
 
@@ -3079,12 +3100,7 @@ window.gameLabels = {
                 btn.dataset.labeled = '1';
                 changed++;
             } else {
-                console.warn(
-                    '[labels] No label for:',
-                    raw,
-                    '->',
-                    key
-                );
+                console.warn('[labels] No label for:', raw, '->', key);
             }
         });
 
@@ -3099,7 +3115,6 @@ window.gameLabels = {
 
     function startObserver() {
         const target = document.getElementById('sections-container');
-
         if (!target) return;
 
         const observer = new MutationObserver(() => {
@@ -3113,8 +3128,13 @@ window.gameLabels = {
     }
 
     function init() {
-        applyGameLabels();
-        startObserver();
+        // Wait for gameLabels to be ready, THEN start applying + observing.
+        // This means if games.js loads before game-label-handler.js,
+        // it will still work — we just wait for labels to show up.
+        waitForGameLabels().then(() => {
+            applyGameLabels();
+            startObserver();
+        });
     }
 
     if (document.readyState === 'loading') {
